@@ -201,6 +201,11 @@
               }
             }
           },
+          "verified_at": {
+            "type": "string",
+            "format": "date",
+            "description": "Date this technique entry was last verified against published evidence."
+          },
           "doc": {
             "type": "string"
           },

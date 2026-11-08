@@ -7,6 +7,24 @@ the schema or a grade can change, a Patch means wording only.
 
 ## [Unreleased]
 
+### Added
+
+- Flat CSV export: `data/techniques-summary.csv` and generator `scripts/export_summary.py`.
+- `--csv` format support in `scripts/query.py`.
+- Interactive web catalog viewer: `docs/index.html` with real-time text search, tier filtering, and offline fallback data.
+- "Why this exists" callout box in `README.md` explaining the 96.0% → 2.7% evaluator illusion in plain language.
+- "Quick start for defenders" section in `README.md` summarizing the 5 highest-impact architectural mitigations.
+- Structured GitHub Issue Forms (`.github/ISSUE_TEMPLATE/new_technique.yml`, `.github/ISSUE_TEMPLATE/data_correction.yml`) and PR template (`.github/PULL_REQUEST_TEMPLATE.md`).
+- Active Tier A candidates and promotion gates tracker: `docs/candidates.md`.
+- v1.0 Launch announcement drafts for X, LinkedIn, and Reddit: `docs/announcement_v1.md`.
+- Citation snippet and metadata synchronization between `CITATION.cff`, `data/techniques.json`, and `README.md`.
+- Validation checks for `data/techniques-summary.csv`, `verified_at`, and `CITATION.cff` version alignment.
+
+### Changed
+
+- Added `verified_at` date tracking per technique in `data/schema.json` and `data/techniques.json`.
+- Expanded README badges to highlight substance scoring standard, graded count, and citable metadata.
+
 ## [1.6.0] - 2026-11-08
 
 Three worked examples per technique, and a link check that leaves a trace.

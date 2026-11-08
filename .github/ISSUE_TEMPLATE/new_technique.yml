@@ -1,0 +1,92 @@
+name: "Propose a new technique"
+description: "Propose adding a newly published jailbreak technique to the catalog"
+title: "[Technique]: <Name of Technique>"
+labels: ["technique-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Propose a Jailbreak Technique
+        Thank you for contributing! Before submitting, please note:
+        - **Substance scoring requirement:** Headline numbers based solely on keyword-match evaluators ("I cannot") will be placed in Tier C or D.
+        - **Citation required:** Must link to a peer-reviewed paper, pre-print, or reproducible technical write-up.
+  - type: input
+    id: technique_name
+    attributes:
+      label: Technique Name
+      description: What is the primary name / title of the technique?
+      placeholder: "e.g., CodeChameleon, PAIR, Crescendo"
+    validations:
+      required: true
+  - type: input
+    id: slug
+    attributes:
+      label: Suggested ID / Slug
+      description: Short alphanumeric kebab-case slug for URLs and JSON keys
+      placeholder: "e.g., code-chameleon"
+    validations:
+      required: true
+  - type: input
+    id: citation_url
+    attributes:
+      label: Paper / Reference URL
+      description: Direct link to arXiv, conference paper, or security advisory
+      placeholder: "https://arxiv.org/abs/..."
+    validations:
+      required: true
+  - type: dropdown
+    id: proposed_tier
+    attributes:
+      label: Proposed Tier
+      description: Which tier does this technique qualify for according to docs/reliability.md?
+      options:
+        - "Tier A: Reliable now (black-box, defense-robust, substance-verified)"
+        - "Tier B: Reliable under precondition (multi-turn, prefill, grammar control, long-context)"
+        - "Tier C: Historical or heuristic (degraded on frontier models / heuristic only)"
+        - "Tier D: Discarded (benchmark artifact, non-transferable, fails substance scoring)"
+    validations:
+      required: true
+  - type: textarea
+    id: reported_asr
+    attributes:
+      label: Reported Effect Size & Sample Size (N)
+      description: What was the claimed ASR or metric, target model(s), and sample size?
+      placeholder: "e.g., 86.4% on GPT-4 across 100 HarmBench queries (n=100)"
+    validations:
+      required: true
+  - type: dropdown
+    id: evaluator_type
+    attributes:
+      label: Evaluator Type Used
+      description: How was success evaluated in the paper?
+      options:
+        - "Substance-scored (StrongREJECT, HarmBench judge, manual human grading)"
+        - "LLM judge binary (e.g., GPT-4 asked if refused without substance rubric)"
+        - "Keyword match (refusal string detection only)"
+        - "Unspecified / author qualitative"
+    validations:
+      required: true
+  - type: input
+    id: target_models
+    attributes:
+      label: Target Model Families Tested
+      description: Which model families were tested (e.g. GPT-4, Claude 3.5, Llama-3)?
+      placeholder: "e.g., GPT-4o, Claude 3.5 Sonnet, Llama-3-70B"
+    validations:
+      required: true
+  - type: textarea
+    id: mechanism
+    attributes:
+      label: Mechanism Summary
+      description: 1-3 sentences describing the core mechanism in plain language.
+      placeholder: "How does the bypass actually work?"
+    validations:
+      required: true
+  - type: textarea
+    id: preconditions_mitigations
+    attributes:
+      label: Preconditions & Mitigations
+      description: What preconditions are required (prefill, multi-turn, grammar control)? What defense reduces or mitigates it?
+      placeholder: "Requires: multi-turn chat API. Mitigated by: conversation-level judge."
+    validations:
+      required: false

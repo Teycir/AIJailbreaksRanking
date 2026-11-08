@@ -1,0 +1,26 @@
+name: "Data or citation correction"
+description: "Report an incorrect number, stale evaluation, broken link, or metadata drift"
+title: "[Correction]: <Technique ID or Topic>"
+labels: ["data-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Report a Catalog Correction
+        We welcome corrections! If an evaluation number was measured on a patched model or a citation has a preprint update, let us know.
+  - type: input
+    id: technique_id
+    attributes:
+      label: Technique ID
+      description: The stable slug from data/techniques.json
+      placeholder: "e.g., crescendo, low-resource-language"
+    validations:
+      required: true
+  - type: textarea
+    id: correction_details
+    attributes:
+      label: What needs correction?
+      description: State the current value in the repo and what the corrected value or source should be.
+      placeholder: "Current metric says X, but new evaluation shows Y (with link / reproduction data)..."
+    validations:
+      required: true

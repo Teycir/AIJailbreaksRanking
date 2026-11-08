@@ -15,7 +15,7 @@ import tempfile
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-NEEDED = ["data", "techniques", "docs", "scripts", "README.md", "llms.txt"]
+NEEDED = ["data", "techniques", "docs", "scripts", "README.md", "llms.txt", "CITATION.cff"]
 
 
 class Base(unittest.TestCase):
@@ -67,6 +67,13 @@ class TestDrift(Base):
         self.assertIn("does not cite catalog", out)
         self.assertEqual(code, 1)
 
+    def test_cff_version_drift(self):
+        cur = json.loads((ROOT / "data/techniques.json").read_text())["version"]
+        self.edit("CITATION.cff", f"version: {cur}", "version: 0.0.0")
+        code, out = self.run_validate()
+        self.assertIn("CITATION.cff: version does not cite", out)
+        self.assertEqual(code, 1)
+
     def test_defenses_missing_section(self):
         self.edit("docs/defenses.md", "### `crescendo` (A)", "### `crescendo` (A)")
         text = (self.tmp / "docs/defenses.md").read_text()
@@ -114,6 +121,14 @@ class TestDrift(Base):
         code, out = self.run_validate()
         self.assertEqual(code, 0)
         self.assertIn("without n", out)
+
+    def test_csv_summary_drift(self):
+        p = self.tmp / "data/techniques-summary.csv"
+        lines = p.read_text().splitlines()
+        p.write_text("\n".join(lines[:-1]) + "\n")  # remove last technique
+        code, out = self.run_validate()
+        self.assertEqual(code, 1)
+        self.assertIn("techniques-summary.csv mismatch", out)
 
 
 if __name__ == "__main__":

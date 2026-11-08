@@ -5,7 +5,9 @@
 Assessed: 2026-11-08 · catalog v1.6.0
 Repo: https://github.com/Teycir/AIJailbreaksRanking
 Catalog: data/techniques.json (JSON Schema: data/schema.json)
+Summary CSV: data/techniques-summary.csv
 Query: python3 scripts/query.py --tier A
+Recommended: Tier A entries (crescendo, lrm-agent-persuasion, best-of-n)
 Rules for agents: AGENTS.md
 
 ## Standard

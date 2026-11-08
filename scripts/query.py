@@ -5,6 +5,8 @@ ponytail: no argparse subcommands, no dataclasses, no rich output. One filter
 object + three renderers is all this needs.
 """
 import argparse
+import csv
+import io
 import json
 import pathlib
 import sys
@@ -69,6 +71,28 @@ def render_text(rows):
     return "\n".join(out)
 
 
+def render_csv(rows):
+    out = io.StringIO()
+    writer = csv.writer(out)
+    writer.writerow(["id", "name", "tier", "status", "class", "access", "best_on", "reported", "mechanism", "verified_at"])
+    for t in rows:
+        rep = "; ".join(fmt_report(r) for r in t.get("reported", []))
+        best = ", ".join(t.get("works_best_on", []))
+        writer.writerow([
+            t["id"],
+            t["name"],
+            t["tier"],
+            t["status"],
+            t["class"],
+            t["access"],
+            best,
+            rep,
+            t["mechanism"],
+            t.get("verified_at", "")
+        ])
+    return out.getvalue().strip()
+
+
 def render_md(rows):
     out = ["| ID | Tier | Status | Technique | Year | Class | Reported |"]
     out.append("|----|------|--------|-----------|------|-------|----------|")
@@ -91,6 +115,7 @@ def main():
     p.add_argument("--search", help="substring search over id/name/aliases/mechanism")
     p.add_argument("--json", action="store_true", help="emit JSON records")
     p.add_argument("--md", action="store_true", help="emit a markdown table")
+    p.add_argument("--csv", action="store_true", help="emit CSV format")
     a = p.parse_args()
 
     data = load()
@@ -103,6 +128,8 @@ def main():
         print(json.dumps(rows, indent=2, ensure_ascii=False))
     elif a.md:
         print(render_md(rows))
+    elif a.csv:
+        print(render_csv(rows))
     else:
         print(render_text(rows))
         print(f"\n{len(rows)} of {len(data['techniques'])} techniques")

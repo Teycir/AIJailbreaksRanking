@@ -27,21 +27,31 @@ These are not rejections — they are Tier C/D placements. A discarded technique
 Adding a technique means all of:
 
 ```
-data/techniques.json     append the record
-techniques/<id>.md       write the doc, frontmatter mirrors the record
-README.md                add the row to the table
-llms.txt                 add the line
-docs/defenses.md         add the per-technique section
+data/techniques.json          append the record (including examples and verified_at)
+techniques/<id>.md            write the doc, frontmatter mirrors the record
+README.md                     add the row to the table and index
+llms.txt                      add the line
+docs/defenses.md              add the per-technique section
+data/techniques-summary.csv   regenerated via python3 scripts/export_summary.py
 ```
 
 `id` is a slug and is permanent once merged. Pick it carefully.
 
 ## Validation
 
+Before opening a PR, ensure all tests and validation checks pass cleanly:
+
 ```bash
-python3 -c "import json;json.load(open('data/techniques.json'))"
-python3 scripts/query.py --id <new-id>
+python3 scripts/validate.py
+python3 scripts/export_summary.py
+pytest
 ```
+
+## Proposing Candidates Without PRs
+
+If you want to suggest a technique or propose a candidate for Tier A without opening a full pull request:
+- Use the [Structured Issue Form](https://github.com/Teycir/AIJailbreaksRanking/issues/new?template=new_technique.yml).
+- See the [Candidates Under Review](docs/candidates.md) watchlist for active observation criteria.
 
 ## Corrections
 

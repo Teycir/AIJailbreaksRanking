@@ -77,6 +77,8 @@ for t in techs:
     for ev in t.get("evidence", []):
         if not ev.get("verified_at"):
             err(f"{tid}: evidence without verified_at: {ev.get('title')}")
+    if not t.get("verified_at") or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", t.get("verified_at", "")):
+        err(f"{tid}: missing or invalid verified_at (expected YYYY-MM-DD)")
 
 def best_cell(t):
     b = t["works_best_on"]
@@ -150,6 +152,31 @@ for tid in ids:
         err(f"llms.txt: no line for {tid}")
     elif f"Best on: {best_cell(T[tid])}." not in line.group(0):
         err(f"llms.txt: missing or stale Best on for {tid}")
+
+# ---- data/techniques-summary.csv must exist and cover every technique
+csv_path = ROOT / "data/techniques-summary.csv"
+if not csv_path.is_file():
+    err("data/techniques-summary.csv missing")
+else:
+    import csv
+
+    with csv_path.open(encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        csv_ids = [row["id"] for row in reader]
+    if sorted(csv_ids) != sorted(ids):
+        err(
+            f"techniques-summary.csv mismatch: missing {set(ids) - set(csv_ids)}, "
+            f"extra {set(csv_ids) - set(ids)}"
+        )
+
+# ---- CITATION.cff must exist and match catalog version
+cff_path = ROOT / "CITATION.cff"
+if not cff_path.is_file():
+    err("CITATION.cff missing")
+else:
+    cff_text = cff_path.read_text(encoding="utf-8")
+    if f"version: {data['version']}" not in cff_text:
+        err(f"CITATION.cff: version does not cite catalog v{data['version']}")
 
 # ---- docs/defenses.md must cover every technique and invent none
 defenses = (ROOT / "docs/defenses.md")

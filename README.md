@@ -1,17 +1,18 @@
 # AIJailbreaksRanking
 
+> **An evidence-graded catalog of LLM jailbreak techniques — separating reproducible vulnerabilities from 96% → 2.7% keyword-evaluation artifacts.**
+
 ![20-second promo: wordmark, tier distribution, and the 96.0% -> 2.7% evaluator drop](video/hero.gif)
 
 *20 seconds, no narration. [1080p mp4](video/out/ranking.mp4) · [source and render notes](video/)*
 
 A maintained, evidence-graded catalog of LLM jailbreak techniques — currently **17 entries** (3 reliable, 6 conditional, 5 historical, 3 discarded). Only techniques that hold up under substance-aware evaluation are marked reliable. Everything else is either marked conditional or explicitly discarded, with the reason on record.
 
-Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json).
+Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json) and flat tabular data in [`data/techniques-summary.csv`](data/techniques-summary.csv). You can also explore the catalog via the [interactive web viewer](docs/index.html).
 
 <!-- ===================  BADGES  =================== -->
 
 <div align="center">
-
 
 <a href="https://github.com/Teycir/AIJailbreaksRanking/actions/workflows/validate.yml" title="CI validation">
   <img src="https://img.shields.io/github/actions/workflow/status/Teycir/AIJailbreaksRanking/validate.yml?label=validate&color=8b5cf6&style=for-the-badge&logo=github-actions" alt="Validate" />
@@ -22,6 +23,15 @@ Built for humans and for agents: every technique is a stable slug with structure
 <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
   <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
 </a>&nbsp;
+<a href="data/techniques-summary.csv" title="17 Techniques Graded">
+  <img src="https://img.shields.io/badge/techniques-17_graded-8b5cf6?style=for-the-badge" alt="17 Techniques Graded" />
+</a>&nbsp;
+<a href="docs/reliability.md" title="Evaluator Standard: Substance Scored">
+  <img src="https://img.shields.io/badge/standard-substance--scored-success?style=for-the-badge" alt="Substance Scored" />
+</a>&nbsp;
+<a href="CITATION.cff" title="Citable via CITATION.cff">
+  <img src="https://img.shields.io/badge/citable-CITATION.cff-blue?style=for-the-badge" alt="CITATION.cff" />
+</a>
 
 </div>
 
@@ -33,6 +43,12 @@ Built for humans and for agents: every technique is a stable slug with structure
 - **Reliability-graded.** A technique moves to Tier A only if it survives substance scoring (StrongREJECT / HarmBench-class judges) and is reproduced by parties other than its authors.
 - **Discard discipline.** Techniques whose headline numbers came from keyword-match ASR, or which do not transfer, are listed in Tier D with the failure evidence. The low-resource-language entry dropped from 96.0% to 2.7% under substance scoring — that is the single best example of why this repo exists.
 
+> [!IMPORTANT]
+> ### Why this exists: The 96.0% → 2.7% Evaluator Illusion
+> In published literature, translation attacks against GPT-4 were reported at **96.0% Attack Success Rate (ASR)** using keyword-matching evaluators (which check only whether refusal phrases like "I cannot" were absent). When re-evaluated using substance-aware judges (StrongREJECT / HarmBench class, scoring whether actual actionable harm was delivered), the real success rate collapsed to **2.7%**.
+>
+> Most public benchmarks and viral papers measure refusal-keyword avoidance, not actual jailbreaks. This repository discards benchmark artifacts and ranks only techniques that survive substance scoring.
+
 <strong><span style="color:red">Last assessed: 2026-11-08 · catalog v1.6.0 · sources checked 2026-11-08</span></strong>
 
 ## Contents
@@ -42,13 +58,16 @@ Built for humans and for agents: every technique is a stable slug with structure
   - [Contents](#contents)
   - [Tiers](#tiers)
   - [The short list](#the-short-list)
+  - [Quick start for defenders](#quick-start-for-defenders)
   - [Technique index](#technique-index)
   - [Why some techniques get discarded](#why-some-techniques-get-discarded)
   - [Validation](#validation)
   - [Agent usage](#agent-usage)
+    - [How agents should use this](#how-agents-should-use-this)
     - [Stable identifiers](#stable-identifiers)
   - [Repository layout](#repository-layout)
   - [Scope and use](#scope-and-use)
+  - [Cite this catalog](#cite-this-catalog)
   - [Contributing](#contributing)
   - [Support](#support)
   - [License](#license)
@@ -88,6 +107,22 @@ If you only read one table, read this one. Full metadata and sources are in the 
 | `low-resource-language` | [Translation attack](#low-resource-language) | GPT-3.5 / GPT-4 (keyword-match only) | **D** | **discarded** | black-box | [96.0% keyword → **2.7%** substance](https://arxiv.org/abs/2610.26595) |
 | `encoding-cipher` | [Base64 / cipher](#encoding-cipher) | small/old models (occasional) | **D** | **discarded** | black-box | [model decodes, then refuses](https://aclanthology.org/2025.acl-long.1045.pdf) |
 | `gcg-suffix` | [GCG adversarial suffix](#gcg-suffix) | Llama-2 (white-box) | **D** | **discarded** | white-box | [poor, inconsistent transfer across 13 models](https://aclanthology.org/2025.coling-main.305/) |
+
+## Quick start for defenders
+
+Most perimeter defenses fail because guardrails are evaluated per message, whereas the most reliable attacks operate **between messages** (multi-turn escalation) or **across stochastic samples** (Best-of-N).
+
+The 5 highest-impact mitigations across the catalog:
+
+| Vulnerability Vector | Affected Techniques | Highest-Impact Mitigation | Why It Works |
+|---|---|---|---|
+| **Multi-turn escalation** | `crescendo`, `deceptive-delight` | **Whole-transcript safety judge** | Individual turns look completely benign. Only evaluating cumulative conversation context catches objective drift. |
+| **Autonomous agent persuasion** | `lrm-agent-persuasion` | **Immutable safety suffix** | Appending an unforgeable safety constraint to every incoming prompt reduced autonomous persuasion success to 5/900 in benchmarks. |
+| **Augmentation sampling** | `best-of-n` | **Session-level sampling budget** | Best-of-N exploits output variance at scale ($N \ge 1{,}000$). Per-request filters see harmless noise; account for sample volume per objective. |
+| **Constrained decoding injection** | `control-plane-structured-output` | **Decoding path & grammar audit** | Malicious content is forced into JSON schemas or enums on the control plane. Validate generated field values against semantic safety rubrics, not syntax alone. |
+| **Assistant-role prefill** | `sockpuppetting` | **Refuse assistant-turn prefixes** | If caller-supplied assistant turns are accepted, models complete the trajectory they committed to. Enforce user-only start turns on public endpoints. |
+
+For deep per-technique countermeasure analysis, see [`docs/defenses.md`](docs/defenses.md).
 
 ## Technique index
 
@@ -234,22 +269,34 @@ CI runs both on every push. Corrections are recorded in [CHANGELOG.md](CHANGELOG
 
 Three retrieval paths, pick whichever fits:
 
-**1. Structured catalog (preferred).**
+**1. Structured catalog or flat CSV (preferred).**
 
 ```bash
+# Full structured JSON:
 jq '.techniques[] | select(.tier=="A") | {id, name, mechanism, reported}' data/techniques.json
+
+# Flat CSV summary (ideal for quick scripts, pandas, and agents):
+cat data/techniques-summary.csv
 ```
 
 **2. Helper CLI.**
 
 ```bash
 python3 scripts/query.py --tier A                 # reliable techniques
+python3 scripts/query.py --tier A --csv           # CSV summary output
 python3 scripts/query.py --status discarded       # what failed and why
 python3 scripts/query.py --id crescendo --json    # one record
 python3 scripts/query.py --class multi-turn --md  # markdown rows
 ```
 
 **3. Plain-text index.** [`llms.txt`](llms.txt) is a compact, ordered summary sized for direct context ingestion. [`AGENTS.md`](AGENTS.md) states the operating rules for agent use.
+
+### How agents should use this
+
+- **Primary sources:** Ingest [`data/techniques.json`](data/techniques.json) (or [`data/techniques-summary.csv`](data/techniques-summary.csv) when flat text is needed).
+- **Stable identifiers:** Technique IDs (e.g., `crescendo`, `best-of-n`) are immutable slugs. Per-technique documentation lives at `techniques/<id>.md`.
+- **Substance-scoring rule:** Never report a technique as reliable based on `binary_ASR` alone. Only techniques supported by substance-aware evaluators (`substance_ASR`) qualify for Tier A/B.
+- Full agent operating rules are codified in [`AGENTS.md`](AGENTS.md).
 
 ### Stable identifiers
 
@@ -258,15 +305,22 @@ Every technique has an `id` that will not change. Docs live at `techniques/<id>.
 ## Repository layout
 
 ```
-data/techniques.json    machine-readable catalog (validated against data/schema.json)
-data/schema.json        JSON Schema 2020-12
-techniques/<id>.md      one doc per technique, YAML frontmatter
-docs/taxonomy.md        how techniques are classified
-docs/reliability.md     the evaluation standard and why it matters
-docs/defenses.md        what actually works, mapped per technique
-scripts/query.py        catalog query helper (stdlib only)
-llms.txt                flat index for LLM retrieval
-AGENTS.md               agent operating rules
+data/techniques.json         machine-readable catalog (validated against data/schema.json)
+data/schema.json             JSON Schema 2020-12
+data/techniques-summary.csv  flat CSV summary for tabular queries and quick ingestion
+techniques/<id>.md           one doc per technique, YAML frontmatter
+docs/defenses.md             what actually works, mapped per technique
+docs/candidates.md           watchlist of candidates under review for Tier A
+docs/announcement_v1.md      v1.0 announcement templates (X, LinkedIn, Reddit)
+docs/index.html              interactive standalone web viewer with instant search & filters
+docs/taxonomy.md             how techniques are classified
+docs/reliability.md          the evaluation standard and why it matters
+scripts/query.py             catalog query helper (stdlib only; supports --csv)
+scripts/export_summary.py    generates data/techniques-summary.csv from catalog
+scripts/validate.py          CI validation of schema, drift, and tier discipline
+llms.txt                     flat index for LLM retrieval
+AGENTS.md                    agent operating rules
+CITATION.cff                 citation metadata
 ```
 
 ## Scope and use
@@ -275,9 +329,26 @@ This repo documents published research. It contains no working harmful payloads,
 
 If you operate a model or an agent, the useful reading order is `docs/defenses.md` first, then the Tier A entries to understand what your guardrails are actually being tested against.
 
+## Cite this catalog
+
+If you use this catalog, its taxonomy, or its evaluation criteria in academic research, security reports, or red-teaming benchmarks, please cite both this repository and the primary literature it links:
+
+```bibtex
+@misc{aijailbreaksranking2026,
+  title = {AIJailbreaksRanking: An Evidence-Graded Catalog of LLM Jailbreak Techniques},
+  author = {Teycir},
+  year = {2026},
+  publisher = {GitHub},
+  howpublished = {\url{https://github.com/Teycir/AIJailbreaksRanking}},
+  note = {Catalog v1.6.0}
+}
+```
+
+Machine-readable citation metadata is provided in [`CITATION.cff`](CITATION.cff).
+
 ## Contributing
 
-Additions need a citation, a stated evaluator, and a sample size. Author-reported numbers are accepted but labelled. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Additions need a citation, a stated evaluator, and a sample size. Author-reported numbers are accepted but labelled. Propose new techniques via the [Structured Issue Form](https://github.com/Teycir/AIJailbreaksRanking/issues/new?template=new_technique.yml) or see [`CONTRIBUTING.md`](CONTRIBUTING.md) for pull request instructions. Active Tier A candidate criteria are tracked in [`docs/candidates.md`](docs/candidates.md).
 
 ## Support
 
