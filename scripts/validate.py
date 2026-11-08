@@ -92,6 +92,20 @@ else:
     if len(body) != len(techs):
         err(f"README: short-list has {len(body)} rows, catalog has {len(techs)}")
 
+stamp = f"Last assessed: {data['updated']}"
+if stamp not in readme:
+    err(f"README: missing assessment stamp {stamp}")
+if f"catalog v{data['version']}" not in readme:
+    err(f"README: assessment stamp does not cite catalog v{data['version']}")
+for t in techs:
+    tid = t["id"]
+    if f"](#{tid})" not in readme:
+        err(f"README: no anchor link to #{tid} from the table")
+    if f'<a id="{tid}"></a>' not in readme:
+        err(f"README: index anchor for {tid} missing")
+    if f"(techniques/{tid}.md)" not in readme:
+        err(f"README: index entry for {tid} does not link its doc")
+
 for t in techs:
     row = re.search(rf"^\|\s*`{re.escape(t['id'])}`\s*\|.*\|\s*{t['tier']}\s*\|\s*{t['status']}\s*\|",
                     readme, re.M)

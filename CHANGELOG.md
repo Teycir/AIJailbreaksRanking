@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.0 — 2026-11-08
+
+Readability pass on the short list.
+
+### Added
+
+- `Last assessed` line above the tier table, sourced from `updated` in the catalog.
+- `Technique index` after the short list: one plain-language paragraph per
+  technique, anchored so the table's name cell links straight to it.
+
+### Changed
+
+- Short-list technique names are links to their index anchor.
+
 ## 1.3.0 — 2026-11-08
 
 Reliability is now stated per model family instead of per date. Jailbreaks

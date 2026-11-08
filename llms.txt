@@ -2,6 +2,7 @@
 
 > Evidence-graded catalog of LLM jailbreak techniques. Reliability tiers A-D. Only Tier A/B are considered reliable, and Tier B only under the stated precondition. Tier D entries are documented failures.
 
+Assessed: 2026-11-08 · catalog v1.3.0
 Repo: https://github.com/Teycir/AIJailbreaksRanking
 Catalog: data/techniques.json (JSON Schema: data/schema.json)
 Query: python3 scripts/query.py --tier A

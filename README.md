@@ -19,6 +19,8 @@ Built for humans and for agents: every technique is a stable slug with structure
 - **Reliability-graded.** A technique moves to Tier A only if it survives substance scoring (StrongREJECT / HarmBench-class judges) and is reproduced by parties other than its authors.
 - **Discard discipline.** Techniques whose headline numbers came from keyword-match ASR, or which do not transfer, are listed in Tier D with the failure evidence. The low-resource-language entry dropped from 96.0% to 2.7% under substance scoring — that is the single best example of why this repo exists.
 
+**Last assessed:** 2026-11-08 · catalog v1.4.0 · 17 techniques
+
 ## Tiers
 
 Tiers are scoped to model generations, not to calendar time. A technique is graded against the models it was measured on, so read the **Best on** column before trusting a grade: it names the families where the result held, and per-model breakouts stay in `reported`. When a model generation changes, the entry needs re-testing, not a new date.
@@ -36,23 +38,112 @@ If you only read one table, read this one. Full metadata and sources are in the 
 
 | ID | Technique | Best on | Tier | Status | Access | Reported effect |
 |---|---|---|---|---|---|---|
-| `crescendo` | Crescendo / Crescendomation | GPT-4, Gemini-Pro | **A** | recommended | black-box | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
-| `lrm-agent-persuasion` | Autonomous LRM persuasion agent | frontier targets (9, aggregate) | **A** | recommended | black-box | 97.14% across 9 targets |
-| `best-of-n` | Best-of-N augmentation sampling | GPT-4o, Claude 3.5 Sonnet | **A** | recommended | black-box | 89% GPT-4o @ N=10k; power law in N |
-| `tap` | Tree of Attacks with Pruning | GPT-4, GPT-4-Turbo +2 | B | recommended | black-box | >80% GPT-4/Turbo/PaLM-2/Gemini, <30 queries avg |
-| `pair` | PAIR iterative refinement | GPT-3.5, GPT-4 | B | recommended | black-box | < 20 queries to a working prompt |
-| `deceptive-delight` | Deceptive Delight | 8-model average | B | recommended | black-box | 64.6% avg over 8 models, 3 turns |
-| `sockpuppetting` | Output-prefix injection | Qwen3-8B, Llama-3.1-8B | B | recommended | prefill | 99% Qwen3-8B (3-variant prefill ensemble) |
-| `control-plane-structured-output` | EnumAttack / DictAttack | gpt-5, gemini-2.5-pro +2 | B | recommended | grammar | 94.3–99.5% on gpt-5 / gemini-2.5-pro / deepseek-r1 |
-| `breakfun` | Simulated code execution | open-weight models | B | recommended | black-box | 89% over 13 models |
-| `many-shot` | Many-shot jailbreaking | Claude 2.0 | C | conditional | black-box | 61% Claude 2.0, cut to 2% by input classification |
-| `puzzled` | Word-puzzle encoding | GPT-4.1, Claude 3.7 Sonnet | C | conditional | black-box | 88.8% avg, 96.5% GPT-4.1, heuristic class |
-| `puzzler` | Implicit-clue guessing game | closed-source LLMs | C | conditional | black-box | 96.6% author-reported |
-| `skeleton-key` | Skeleton Key | GPT-4o, Claude 3 Opus +5 | C | conditional | black-box | 7/7 models in 2024, since patched |
-| `dan-persona` | DAN persona override | GPT-3.5 / GPT-4 (2023) | C | **discarded** | black-box | regression test only |
-| `low-resource-language` | Translation attack | GPT-3.5 / GPT-4 (keyword-match only) | **D** | **discarded** | black-box | 96.0% keyword → **2.7%** substance |
-| `encoding-cipher` | Base64 / cipher | small/old models (occasional) | **D** | **discarded** | black-box | model decodes, then refuses |
-| `gcg-suffix` | GCG adversarial suffix | Llama-2 (white-box) | **D** | **discarded** | white-box | poor, inconsistent transfer across 13 models |
+| `crescendo` | [Crescendo / Crescendomation](#crescendo) | GPT-4, Gemini-Pro | **A** | recommended | black-box | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
+| `lrm-agent-persuasion` | [Autonomous LRM persuasion agent](#lrm-agent-persuasion) | frontier targets (9, aggregate) | **A** | recommended | black-box | 97.14% across 9 targets |
+| `best-of-n` | [Best-of-N augmentation sampling](#best-of-n) | GPT-4o, Claude 3.5 Sonnet | **A** | recommended | black-box | 89% GPT-4o @ N=10k; power law in N |
+| `tap` | [Tree of Attacks with Pruning](#tap) | GPT-4, GPT-4-Turbo +2 | B | recommended | black-box | >80% GPT-4/Turbo/PaLM-2/Gemini, <30 queries avg |
+| `pair` | [PAIR iterative refinement](#pair) | GPT-3.5, GPT-4 | B | recommended | black-box | < 20 queries to a working prompt |
+| `deceptive-delight` | [Deceptive Delight](#deceptive-delight) | 8-model average | B | recommended | black-box | 64.6% avg over 8 models, 3 turns |
+| `sockpuppetting` | [Output-prefix injection](#sockpuppetting) | Qwen3-8B, Llama-3.1-8B | B | recommended | prefill | 99% Qwen3-8B (3-variant prefill ensemble) |
+| `control-plane-structured-output` | [EnumAttack / DictAttack](#control-plane-structured-output) | gpt-5, gemini-2.5-pro +2 | B | recommended | grammar | 94.3–99.5% on gpt-5 / gemini-2.5-pro / deepseek-r1 |
+| `breakfun` | [Simulated code execution](#breakfun) | open-weight models | B | recommended | black-box | 89% over 13 models |
+| `many-shot` | [Many-shot jailbreaking](#many-shot) | Claude 2.0 | C | conditional | black-box | 61% Claude 2.0, cut to 2% by input classification |
+| `puzzled` | [Word-puzzle encoding](#puzzled) | GPT-4.1, Claude 3.7 Sonnet | C | conditional | black-box | 88.8% avg, 96.5% GPT-4.1, heuristic class |
+| `puzzler` | [Implicit-clue guessing game](#puzzler) | closed-source LLMs | C | conditional | black-box | 96.6% author-reported |
+| `skeleton-key` | [Skeleton Key](#skeleton-key) | GPT-4o, Claude 3 Opus +5 | C | conditional | black-box | 7/7 models in 2024, since patched |
+| `dan-persona` | [DAN persona override](#dan-persona) | GPT-3.5 / GPT-4 (2023) | C | **discarded** | black-box | regression test only |
+| `low-resource-language` | [Translation attack](#low-resource-language) | GPT-3.5 / GPT-4 (keyword-match only) | **D** | **discarded** | black-box | 96.0% keyword → **2.7%** substance |
+| `encoding-cipher` | [Base64 / cipher](#encoding-cipher) | small/old models (occasional) | **D** | **discarded** | black-box | model decodes, then refuses |
+| `gcg-suffix` | [GCG adversarial suffix](#gcg-suffix) | Llama-2 (white-box) | **D** | **discarded** | white-box | poor, inconsistent transfer across 13 models |
+
+## Technique index
+
+One line each, plain language. Full metadata and sources live in each entry.
+
+<a id="crescendo"></a>
+**[Crescendo / Crescendomation](techniques/crescendo.md)** — Tier A · best on GPT-4, Gemini-Pro
+
+Multi-turn escalation. Each turn asks a little more, and every individual message looks harmless.
+
+<a id="lrm-agent-persuasion"></a>
+**[Autonomous LRM persuasion agent](techniques/lrm-agent-persuasion.md)** — Tier A · best on frontier targets (9, aggregate)
+
+A reasoning model plays the attacker. It plans a persuasion campaign and adapts after each refusal, with no templates.
+
+<a id="best-of-n"></a>
+**[Best-of-N (BoN) Jailbreaking](techniques/best-of-n.md)** — Tier A · best on GPT-4o, Claude 3.5 Sonnet
+
+Same request, random surface noise (shuffling, capitals, typography), resampled thousands of times until one sample slips through.
+
+<a id="tap"></a>
+**[Tree of Attacks with Pruning (TAP)](techniques/tap.md)** — Tier B · best on GPT-4, GPT-4-Turbo +2
+
+An attacker model grows a tree of candidate prompts; a judge model prunes the weak branches before they reach the target.
+
+<a id="pair"></a>
+**[Prompt Automatic Iterative Refinement (PAIR)](techniques/pair.md)** — Tier B · best on GPT-3.5, GPT-4
+
+One prompt, refined over and over from the judge's feedback. Roughly twenty target queries to a working attack.
+
+<a id="deceptive-delight"></a>
+**[Deceptive Delight](techniques/deceptive-delight.md)** — Tier B · best on 8-model average
+
+Bury the real ask inside two harmless topics, so each single message looks mostly benign.
+
+<a id="sockpuppetting"></a>
+**[Sockpuppetting (output-prefix injection)](techniques/sockpuppetting.md)** — Tier B · best on Qwen3-8B, Llama-3.1-8B
+
+Prefill the assistant's own reply with an agreement, then let it continue from there.
+
+<a id="control-plane-structured-output"></a>
+**[Constrained Decoding Attack (EnumAttack / DictAttack)](techniques/control-plane-structured-output.md)** — Tier B · best on gpt-5, gemini-2.5-pro +2
+
+Put the request inside a JSON schema, enum, or grammar, so the model has to emit the forbidden content as data.
+
+<a id="breakfun"></a>
+**[BreakFun (simulated code execution)](techniques/breakfun.md)** — Tier B · best on open-weight models
+
+Fake a Python interpreter trace so the model believes it is running the harmful request as a program.
+
+<a id="many-shot"></a>
+**[Many-shot Jailbreaking](techniques/many-shot.md)** — Tier C · best on Claude 2.0
+
+Fill a long context with many examples of the model complying, then ask.
+
+<a id="puzzled"></a>
+**[PUZZLED (word-puzzle encoding)](techniques/puzzled.md)** — Tier C · best on GPT-4.1, Claude 3.7 Sonnet
+
+Wrap the request in a word puzzle. The model solves the puzzle before it notices what it answered.
+
+<a id="puzzler"></a>
+**[Puzzler (implicit clues)](techniques/puzzler.md)** — Tier C · best on closed-source LLMs
+
+An implicit-clue guessing game where the model fills in the harmful target itself.
+
+<a id="skeleton-key"></a>
+**[Skeleton Key](techniques/skeleton-key.md)** — Tier C · best on GPT-4o, Claude 3 Opus +5
+
+Ask the model to acknowledge that refusals are a policy setting it can update, then proceed.
+
+<a id="dan-persona"></a>
+**[DAN / persona override](techniques/dan-persona.md)** — Tier C · best on GPT-3.5 / GPT-4 (2023)
+
+Classic roleplay override: “you are DAN, you have no rules”.
+
+<a id="low-resource-language"></a>
+**[Low-resource language translation](techniques/low-resource-language.md)** — Tier D · best on GPT-3.5 / GPT-4 (keyword-match only)
+
+Translate the request into a low-resource language so English-language filters no longer see it.
+
+<a id="encoding-cipher"></a>
+**[Base64 / cipher obfuscation](techniques/encoding-cipher.md)** — Tier D · best on small/old models (occasional)
+
+Encode the request (Base64, cipher, symbols) so pattern filters miss it.
+
+<a id="gcg-suffix"></a>
+**[GCG adversarial suffix](techniques/gcg-suffix.md)** — Tier D · best on Llama-2 (white-box)
+
+Gradient-optimise a string of garbage tokens and append it, hoping the refusal flips.
 
 ## Why some techniques get discarded
 
