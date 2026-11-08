@@ -43,7 +43,8 @@
           "class",
           "access",
           "mechanism",
-          "works_best_on"
+          "works_best_on",
+          "example"
         ],
         "additionalProperties": false,
         "properties": {
@@ -217,6 +218,11 @@
               "type": "string"
             },
             "description": "Model families or configurations where it failed or was measured weak."
+          },
+          "example": {
+            "type": "string",
+            "minLength": 80,
+            "description": "Worked example with a harmless stand-in target: transcript plus why it lands."
           }
         }
       }

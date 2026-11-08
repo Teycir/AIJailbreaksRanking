@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.0 - 2026-11-08
+
+Worked examples.
+
+### Added
+
+- `## Example` in every technique write-up: the paper's target, a harmless
+  stand-in, a short transcript, and one line on why the mechanism lands.
+- `example` in the catalog (required by the schema), so agents querying JSON
+  get the same worked example the docs show.
+- Validator: every doc must carry an `## Example` section matching its catalog
+  entry.
+
 ## 1.4.0 — 2026-11-08
 
 Readability pass on the short list.

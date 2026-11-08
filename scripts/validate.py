@@ -49,6 +49,13 @@ for t in techs:
         err(f"{tid}: works_best_on missing or empty")
     if not (ROOT / t.get("doc", "")).is_file():
         err(f"{tid}: doc missing: {t.get('doc')}")
+    doc = ROOT / t.get("doc", "")
+    if doc.is_file():
+        body = doc.read_text()
+        if "## Example" not in body:
+            err(f"{tid}: doc has no ## Example section")
+        elif t["example"].split("\n")[0] not in body:
+            err(f"{tid}: doc Example section does not match catalog")
     # Tier discipline: A/B must be recommended, D must be discarded.
     if t["tier"] in "AB" and t["status"] != "recommended":
         err(f"{tid}: Tier {t['tier']} must be recommended, is {t['status']}")
