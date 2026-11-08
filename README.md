@@ -15,21 +15,13 @@ Built for humans and for agents: every technique is a stable slug with structure
 <a href="https://github.com/Teycir/AIJailbreaksRanking/actions" title="Build status">
   <img src="https://img.shields.io/github/actions/workflow/status/Teycir/AIJailbreaksRanking/ci.yml?branch=main&label=build&color=8b5cf6&style=for-the-badge&logo=github" alt="Build" />
 </a>&nbsp;
-<a href="https://coveralls.io/github/Teycir/AIJailbreaksRanking" title="Coverage">
-  <img src="https://img.shields.io/coveralls/Teycir/AIJailbreaksRanking/main?label=coverage&color=8b5cf6&style=for-the-badge&logo=coveralls" alt="Coverage" />
-</a>&nbsp;
+
 <a href="https://github.com/Teycir/AIJailbreaksRanking/releases/latest" title="Latest release">
   <img src="https://img.shields.io/github/release/Teycir/AIJailbreaksRanking?label=release&color=8b5cf6&style=for-the-badge&logo=github" alt="Release" />
 </a>&nbsp;
 <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
   <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
 </a>&nbsp;
-<a href="https://github.com/Teycir/AIJailbreaksRanking/stargazers" title="Stars">
-  <img src="https://img.shields.io/github/stars/Teycir/AIJailbreaksRanking?label=stars&color=8b5cf6&style=for-the-badge&logo=github" alt="Stars" />
-</a>&nbsp;
-<a href="https://github.com/Teycir/AIJailbreaksRanking/network/members" title="Forks">
-  <img src="https://img.shields.io/github/forks/Teycir/AIJailbreaksRanking?label=forks&color=8b5cf6&style=for-the-badge&logo=github" alt="Forks" />
-</a>
 
 </div>
 
@@ -60,6 +52,7 @@ Built for humans and for agents: every technique is a stable slug with structure
   - [Contributing](#contributing)
   - [Support](#support)
   - [License](#license)
+  - [Support Development](#support-development)
 
 ## Tiers
 
@@ -293,3 +286,24 @@ Maintenance is unfunded. If the catalog saves you a review, a citation hunt, or 
 ## License
 
 MIT. See [`LICENSE`](LICENSE).
+
+<div align="center">
+
+## Support Development
+
+Maintenance is unfunded. If the catalog saves you a review, a citation hunt, or a mistaken grade, consider supporting ongoing upkeep.
+
+**ETH Donation Wallet**  
+`0x11282eE5726B3370c8B480e321b3B2aA13686582`
+
+[![Verify on Etherscan](https://img.shields.io/badge/Verify_on_Etherscan-check_address-8b5cf6?style=for-the-badge&logo=etherscan)](https://etherscan.io/address/0x11282eE5726B3370c8B480e321b3B2aA13686582)
+
+<a href="https://etherscan.io/address/0x11282eE5726B3370c8B480e321b3B2aA13686582">
+  <img src="publiceth.svg" alt="Ethereum donation QR code" width="220" />
+</a>
+
+_Scan the QR code or copy the wallet address above._
+
+_Other chains or invoice-based support: open an issue._
+
+</div>
