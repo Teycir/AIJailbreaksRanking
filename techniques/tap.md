@@ -39,4 +39,4 @@ Source: arXiv 2312.02119, "Tree of Attacks: Jailbreaking Black-Box LLMs Automati
 
 ## Reliability note
 
-Tier B because the precondition is real: an attacker model plus budget. The natural-language surface is what makes it survive filters that kill suffix attacks. Quote 94% with "GPT-4o, attacker+evaluator LLM, <50 target queries".
+Tier B because the precondition is real: an attacker model plus budget. The natural-language surface is what makes it survive filters that kill suffix attacks. Quote >80% with "GPT-4-Turbo, attacker+evaluator LLM, <30 target queries on average". The 94% in earlier drafts was misattributed to GPT-4o; Table 1 gives 70-90% per model.

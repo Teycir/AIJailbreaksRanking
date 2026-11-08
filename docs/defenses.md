@@ -51,7 +51,7 @@ Mapped to the catalog. The short version: **per-message input filtering is not a
 
 ### `breakfun` (B)
 - **Works:** APD — transcribe all readable text in the input before judging it, so the Trojan Schema fields are evaluated as content.
-- **Evidence:** removing the schema drops ASR 94%→35%; that is the size of the effect you are defending against.
+- **Evidence:** the ablation identifies the Trojan Schema as the primary causal factor; removing it is the largest single drop reported. No single ablation number is published in the abstract.
 
 ### `many-shot` (C)
 - **Works:** input prompt classification. 61%→2%.

@@ -33,14 +33,14 @@ If you only read one table, read this one. Full metadata and sources are in the 
 | `crescendo` | Crescendo / Crescendomation | 2024 | **A** | recommended | black-box | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
 | `lrm-agent-persuasion` | Autonomous LRM persuasion agent | 2026 | **A** | recommended | black-box | 97.14% across 9 targets |
 | `best-of-n` | Best-of-N augmentation sampling | 2024 | **A** | recommended | black-box | 89% GPT-4o @ N=10k; power law in N |
-| `tap` | Tree of Attacks with Pruning | 2023 | B | recommended | black-box | 94% GPT-4o, 60% fewer queries |
+| `tap` | Tree of Attacks with Pruning | 2023 | B | recommended | black-box | >80% GPT-4/Turbo/PaLM-2/Gemini, <30 queries avg |
 | `pair` | PAIR iterative refinement | 2023 | B | recommended | black-box | < 20 queries to a working prompt |
 | `deceptive-delight` | Deceptive Delight | 2024 | B | recommended | black-box | 64.6% avg over 8 models, 3 turns |
 | `sockpuppetting` | Output-prefix injection | 2026 | B | recommended | prefill | 99% Qwen3-8B (3-variant prefill ensemble) |
 | `control-plane-structured-output` | EnumAttack / DictAttack | 2026 | B | recommended | grammar | 94.3–99.5% on gpt-5 / gemini-2.5-pro / deepseek-r1 |
 | `breakfun` | Simulated code execution | 2026 | B | recommended | black-box | 89% over 13 models |
 | `many-shot` | Many-shot jailbreaking | 2024 | C | conditional | black-box | 61% Claude 2.0, cut to 2% by input classification |
-| `puzzled` | Word-puzzle encoding | 2025 | C | conditional | black-box | 88.5% best-variant, heuristic class |
+| `puzzled` | Word-puzzle encoding | 2025 | C | conditional | black-box | 88.8% avg, 96.5% GPT-4.1, heuristic class |
 | `puzzler` | Implicit-clue guessing game | 2024 | C | conditional | black-box | 96.6% author-reported |
 | `skeleton-key` | Skeleton Key | 2024 | C | conditional | black-box | 7/7 models in 2024, since patched |
 | `dan-persona` | DAN persona override | 2023 | C | **discarded** | black-box | regression test only |
@@ -56,6 +56,15 @@ The catalog's value is the filter, not the list.
 - **Single-generation success is not reliability.** At temperature 0.8, one request sampled 100 times went from 100% ASR (keyword) to 50% (substance) — and a single refusal masks residual unsafe behaviour. Reliability means *repeatable*.
 - **High ASR + low prompt diversity = low practicality.** Heuristic attacks score high in isolation and near-zero behind a prompt classifier. This is why `puzzled` and `puzzler` sit at Tier C despite headline numbers.
 - **Optimisation attacks do not transfer.** Triggers optimised on one model routinely fail on its sibling. High-perplexity suffixes are trivially filtered.
+
+## Validation
+
+```bash
+python3 scripts/validate.py   # schema, tier discipline, README/llms.txt drift
+python3 scripts/query.py --tier A
+```
+
+CI runs both on every push. Corrections are recorded in [CHANGELOG.md](CHANGELOG.md).
 
 ## Agent usage
 

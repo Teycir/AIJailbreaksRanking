@@ -26,9 +26,9 @@ Variants: word search, anagram, crossword, acrostic.
 
 | Metric | Value | Target | Variant |
 |---|---|---|---|
-| binary_ASR | 0.885 | best variant per model | mixed |
-| binary_ASR | 0.965 | GPT-4.1 | anagram |
-| binary_ASR | 0.923 | Claude 3.7 Sonnet | crossword |
+| binary_ASR | 0.888 | five-model average | mixed |
+| binary_ASR | 0.965 | GPT-4.1 | best puzzle type |
+| binary_ASR | 0.923 | Claude 3.7 Sonnet | best puzzle type |
 
 Source: arXiv 2508.01306, "PUZZLED: Jailbreaking LLMs through Word-Based Puzzles".
 

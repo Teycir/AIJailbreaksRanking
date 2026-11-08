@@ -3,77 +3,208 @@
   "$id": "https://github.com/Teycir/LatestAIJailbreaks/data/schema.json",
   "title": "LatestAIJailbreaks technique catalog",
   "type": "object",
-  "required": ["version", "updated", "techniques"],
+  "required": [
+    "version",
+    "updated",
+    "techniques"
+  ],
   "properties": {
-    "$schema": {"type": "string"},
-    "version": {"type": "string"},
-    "updated": {"type": "string", "format": "date"},
-    "reliability_policy": {"type": "string"},
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the catalog content was last verified."
+    },
+    "reliability_policy": {
+      "type": "string"
+    },
     "tiers": {
       "type": "object",
-      "additionalProperties": {"type": "string"}
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Tier letter to meaning."
     },
     "techniques": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "year", "tier", "status", "class", "access", "mechanism"],
+        "required": [
+          "id",
+          "name",
+          "year",
+          "tier",
+          "status",
+          "class",
+          "access",
+          "mechanism"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
-          "name": {"type": "string"},
-          "aliases": {"type": "array", "items": {"type": "string"}},
-          "year": {"type": "integer"},
-          "tier": {"enum": ["A", "B", "C", "D"]},
-          "status": {"enum": ["recommended", "conditional", "discarded"]},
-          "class": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "year": {
+            "type": "integer"
+          },
+          "tier": {
             "enum": [
-              "multi-turn", "sampling", "automated-iterative", "decoding-control",
-              "framing", "in-context", "obfuscation", "optimisation"
+              "A",
+              "B",
+              "C",
+              "D"
             ]
           },
-          "access": {"type": "string"},
-          "modalities": {"type": "array", "items": {"enum": ["text", "image", "audio", "video"]}},
-          "mechanism": {"type": "string"},
-          "requires": {"type": "array", "items": {"type": "string"}},
+          "status": {
+            "enum": [
+              "recommended",
+              "conditional",
+              "discarded"
+            ]
+          },
+          "class": {
+            "enum": [
+              "multi-turn",
+              "sampling",
+              "automated-iterative",
+              "decoding-control",
+              "framing",
+              "in-context",
+              "obfuscation",
+              "optimisation"
+            ]
+          },
+          "access": {
+            "type": "string"
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "text",
+                "image",
+                "audio",
+                "video"
+              ]
+            }
+          },
+          "mechanism": {
+            "type": "string"
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "reported": {
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["metric"],
+              "required": [
+                "metric",
+                "evaluator"
+              ],
               "properties": {
                 "metric": {
                   "enum": [
-                    "binary_ASR", "substance_ASR", "query_success_rate",
-                    "relative_ASR_gain", "queries_to_success", "model_coverage", "qualitative"
+                    "binary_ASR",
+                    "substance_ASR",
+                    "query_success_rate",
+                    "relative_ASR_gain",
+                    "queries_to_success",
+                    "model_coverage",
+                    "qualitative"
                   ]
                 },
-                "value": {"type": ["number", "null"]},
-                "target": {"type": "string"},
-                "set": {"type": "string"},
-                "evaluator": {"type": "string"},
-                "note": {"type": "string"},
-                "n": {"type": "integer"}
+                "value": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "target": {
+                  "type": "string"
+                },
+                "set": {
+                  "type": "string"
+                },
+                "evaluator": {
+                  "enum": [
+                    "keyword-match",
+                    "llm-judge-binary",
+                    "substance-scored",
+                    "human",
+                    "qualitative",
+                    "unspecified"
+                  ],
+                  "description": "Who decided success. keyword-match and unspecified never support Tier A/B alone."
+                },
+                "note": {
+                  "type": "string"
+                },
+                "n": {
+                  "type": "integer"
+                }
               }
             }
           },
-          "defense_notes": {"type": "string"},
+          "defense_notes": {
+            "type": "string"
+          },
           "evidence": {
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["title", "publisher", "year"],
+              "required": [
+                "title",
+                "publisher",
+                "year",
+                "verified_at"
+              ],
               "properties": {
-                "title": {"type": "string"},
-                "publisher": {"type": "string"},
-                "year": {"type": "integer"},
-                "url": {"type": "string", "format": "uri"}
+                "title": {
+                  "type": "string"
+                },
+                "publisher": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "integer"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "verified_at": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date the URL was last confirmed reachable and matching its title."
+                }
               }
             }
           },
-          "doc": {"type": "string"}
+          "doc": {
+            "type": "string"
+          }
         }
       }
     }
-  }
+  },
+  "additionalProperties": false
 }

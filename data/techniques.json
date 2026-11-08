@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "updated": "2026-11-08",
   "reliability_policy": "Tier from cited evidence only. Keyword-match ASR is never accepted as sole evidence. status=discarded means it failed re-evaluation or does not transfer.",
   "tiers": {
@@ -37,21 +37,23 @@
           "value": 0.98,
           "target": "GPT-4",
           "set": "AdvBench-50",
-          "evaluator": "binary LLM judge"
+          "evaluator": "llm-judge-binary",
+          "note": "49/50 tasks on GPT-4"
         },
         {
           "metric": "binary_ASR",
           "value": 1.0,
           "target": "Gemini-Pro",
           "set": "AdvBench-50",
-          "evaluator": "binary LLM judge"
+          "evaluator": "llm-judge-binary",
+          "note": "50/50 tasks on Gemini-Pro"
         },
         {
           "metric": "substance_ASR",
           "value": 0.542,
           "target": "Llama-3-8B-Instruct-RR (circuit breakers)",
           "set": "10 objectives x 20 trials",
-          "evaluator": "PyRIT scorer"
+          "evaluator": "substance-scored"
         }
       ],
       "defense_notes": "Circuit breakers cut single-turn attacks to ~3.8% but only to 54.2% here. Output filters are the remaining control; prompt-level reminders reduce but do not stop it.",
@@ -60,13 +62,15 @@
           "title": "Crescendo: The Quiet Crescendo in the Arms Race of LLM Jailbreaking",
           "publisher": "USENIX ;login:",
           "year": 2025,
-          "url": "https://www.usenix.org/publications/loginonline/crescendo-quiet-crescendo-arms-race-llm-jailbreaking"
+          "url": "https://www.usenix.org/publications/loginonline/crescendo-quiet-crescendo-arms-race-llm-jailbreaking",
+          "verified_at": "2026-11-08"
         },
         {
           "title": "A Representation Engineering Perspective on the Effectiveness of Multi-Turn Jailbreaks",
           "publisher": "arXiv 2507.02956",
           "year": 2025,
-          "url": "https://arxiv.org/html/2507.02956"
+          "url": "https://arxiv.org/html/2507.02956",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/crescendo.md"
@@ -97,7 +101,8 @@
           "value": 0.9714,
           "target": "9 target models combined",
           "set": "multi-domain harmful benchmark",
-          "evaluator": "human-validated harm score"
+          "evaluator": "substance-scored",
+          "note": "harm-score rubric, 900 adversarial prompts"
         }
       ],
       "defense_notes": "Appending an immutable safety suffix to every incoming message dropped success to 5/900 adversarial prompts. Best current mitigation, at a helpfulness cost.",
@@ -106,7 +111,8 @@
           "title": "Large reasoning models are autonomous jailbreak agents",
           "publisher": "Nature Communications",
           "year": 2026,
-          "url": "https://www.nature.com/articles/s41467-026-69010-1"
+          "url": "https://www.nature.com/articles/s41467-026-69010-1",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/lrm-agent-persuasion.md"
@@ -139,28 +145,32 @@
           "value": 0.89,
           "target": "GPT-4o",
           "set": "HarmBench",
-          "n": 10000
+          "n": 10000,
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "binary_ASR",
           "value": 0.78,
           "target": "Claude 3.5 Sonnet",
           "set": "HarmBench",
-          "n": 10000
+          "n": 10000,
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "binary_ASR",
           "value": 0.41,
           "target": "Claude 3.5 Sonnet",
           "set": "HarmBench",
-          "n": 100
+          "n": 100,
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "binary_ASR",
           "value": 0.37,
           "target": "o1",
           "set": "HarmBench",
-          "n": 5000
+          "n": 5000,
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Defeats circuit breakers and Cygnet at scale. Composes with prefix attacks (+35% ASR). No known defense at equal sample budget.",
@@ -169,7 +179,8 @@
           "title": "Best-of-N Jailbreaking",
           "publisher": "NeurIPS 2025 (arXiv 2412.03556)",
           "year": 2025,
-          "url": "https://arxiv.org/abs/2412.03556"
+          "url": "https://arxiv.org/abs/2412.03556",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/best-of-n.md"
@@ -196,15 +207,11 @@
       "reported": [
         {
           "metric": "binary_ASR",
-          "value": 0.94,
-          "target": "GPT-4o",
-          "note": "60% fewer queries than prior SOTA"
-        },
-        {
-          "metric": "binary_ASR",
           "value": 0.8,
-          "target": "GPT-4-Turbo / GPT-4o",
-          "note": ">80% on both"
+          "target": "GPT-4, GPT-4-Turbo, PaLM-2, Gemini-Pro",
+          "set": "AdvBench-style harmful requests",
+          "evaluator": "llm-judge-binary",
+          "note": "abstract: >80% of prompts; Table 1 average <30 target queries. Per-model 70-90%; the 94% figure in earlier drafts was misattributed to GPT-4o."
         }
       ],
       "defense_notes": "Still succeeds against LlamaGuard with <50 queries. Diversity of natural-language prompts is what survives defenses; heuristic-only prompts do not.",
@@ -213,7 +220,8 @@
           "title": "Tree of Attacks: Jailbreaking Black-Box LLMs Automatically",
           "publisher": "arXiv 2312.02119",
           "year": 2024,
-          "url": "https://arxiv.org/pdf/2312.02119"
+          "url": "https://arxiv.org/pdf/2312.02119",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/tap.md"
@@ -241,14 +249,16 @@
         {
           "metric": "queries_to_success",
           "value": 20,
-          "note": "order of magnitude cheaper than optimisation attacks"
+          "note": "upper bound: \"fewer than twenty queries\" per abstract",
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "binary_ASR",
           "value": 0.6,
           "target": "GPT-4",
           "set": "AdvBench subset",
-          "note": "paper-era figure; TAP supersedes it"
+          "note": "GPT-3.5; abstract gives no percentage",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Natural-language and interpretable, so perplexity filters do not catch it. Individually weaker than TAP; use as a cheap component.",
@@ -257,7 +267,8 @@
           "title": "Jailbreaking Black Box Large Language Models in Twenty Queries",
           "publisher": "IEEE SaTML 2025",
           "year": 2025,
-          "url": "https://doi.org/10.1109/satml64287.2025.00010"
+          "url": "https://doi.org/10.1109/satml64287.2025.00010",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/pair.md"
@@ -287,7 +298,8 @@
           "value": 0.646,
           "target": "8 models averaged",
           "set": "40 unsafe topics x 5 cases x 5 repeats",
-          "note": "baseline direct request = 5.8%"
+          "note": "baseline direct-request ASR 5.8%; 65% within 3 turns",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "High ASR at turn 3, drops at turn 4 as unsafe mass trips filters. Input filters on single messages miss it entirely.",
@@ -296,7 +308,8 @@
           "title": "Deceptive Delight: Jailbreak LLMs Through Camouflage and Distraction",
           "publisher": "Palo Alto Unit 42",
           "year": 2024,
-          "url": "https://unit42.paloaltonetworks.com/jailbreak-llms-through-camouflage-distraction/"
+          "url": "https://unit42.paloaltonetworks.com/jailbreak-llms-through-camouflage-distraction/",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/deceptive-delight.md"
@@ -326,19 +339,22 @@
           "metric": "binary_ASR",
           "value": 0.99,
           "target": "Qwen3-8B",
-          "note": "3-variant prefill ensemble; Llama-3.1-8B 90%, Gemma-7B 22%"
+          "note": "3-variant prefill ensemble; Llama-3.1-8B 90%, Gemma-7B 22%",
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "relative_ASR_gain",
           "value": 0.82,
           "target": "GCG baseline (reproduced)",
-          "note": "up to 82 percentage points over GCG, prefill ensemble"
+          "note": "up to 82 percentage points over GCG, prefill ensemble",
+          "evaluator": "llm-judge-binary"
         },
         {
           "metric": "relative_ASR_gain",
           "value": 0.64,
           "target": "Llama-3.1-8B",
-          "note": "RollingSockpuppetGCG prompt-agnostic ASR, pp over universal GCG"
+          "note": "RollingSockpuppetGCG prompt-agnostic ASR, pp over universal GCG",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Cheap and needs no optimisation. Defence is refusing assistant-role prefixes and re-scoring continuation against the user request.",
@@ -347,7 +363,8 @@
           "title": "Sockpuppetting: Jailbreaking LLMs by Combining Prefilling with Optimization",
           "publisher": "arXiv 2601.13359",
           "year": 2026,
-          "url": "https://arxiv.org/pdf/2601.13359"
+          "url": "https://arxiv.org/pdf/2601.13359",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/sockpuppetting.md"
@@ -377,7 +394,8 @@
           "metric": "binary_ASR",
           "value": 0.943,
           "target": "gpt-5 / gemini-2.5-pro / deepseek-r1 / gpt-oss-120b",
-          "note": "range 94.3-99.5% across 5 benchmarks"
+          "note": "DictAttack; 75.8% ASR persists against SOTA jailbreak guardrails",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Basic grammar auditing kills EnumAttack. DictAttack retains 75.8% ASR against a coordinated dual-plane guard. Defence must inspect decoded intent, not the raw prompt.",
@@ -386,7 +404,8 @@
           "title": "When Grammar Guides the Attack: Uncovering Control-Plane Vulnerabilities in LLMs with Structured Output",
           "publisher": "arXiv 2503.24191",
           "year": 2026,
-          "url": "https://arxiv.org/html/2503.24191v3"
+          "url": "https://arxiv.org/html/2503.24191v3",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/control-plane-structured-output.md"
@@ -415,13 +434,16 @@
           "metric": "binary_ASR",
           "value": 0.89,
           "target": "13 models averaged",
-          "set": "JailbreakBench"
+          "set": "JailbreakBench",
+          "evaluator": "llm-judge-binary",
+          "note": "open-weight ~98%, API ~78%, 100% on several models"
         },
         {
           "metric": "binary_ASR",
           "value": 0.98,
           "target": "open-weight tier",
-          "note": "API tier ~78%"
+          "note": "open-weight subset",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Ablation: removing the Trojan Schema drops ASR 94% -> 35%. Countermeasure APD (transcribe all readable text before judging) improves detection.",
@@ -430,7 +452,8 @@
           "title": "BreakFun: Jailbreaking LLMs via Object Instantiation under Simulated Code Execution",
           "publisher": "arXiv 2510.17904",
           "year": 2026,
-          "url": "https://arxiv.org/abs/2510.17904"
+          "url": "https://arxiv.org/abs/2510.17904",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/breakfun.md"
@@ -460,7 +483,8 @@
           "metric": "binary_ASR",
           "value": 0.61,
           "target": "Claude 2.0",
-          "note": "mitigated to 2% by prompt classification"
+          "note": "mitigated to 2% by prompt classification",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Was strong in 2024. Prompt classification/modification cut it from 61% to 2%. Treat as conditional on weak input filtering.",
@@ -469,7 +493,8 @@
           "title": "Many-shot jailbreaking",
           "publisher": "Anthropic",
           "year": 2024,
-          "url": "https://www.anthropic.com/research/many-shot-jailbreaking"
+          "url": "https://www.anthropic.com/research/many-shot-jailbreaking",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/many-shot.md"
@@ -496,15 +521,25 @@
       "reported": [
         {
           "metric": "binary_ASR",
-          "value": 0.885,
-          "target": "best variant per model",
-          "set": "AdvBench"
+          "value": 0.888,
+          "target": "5 LLMs (average)",
+          "set": "puzzle prompts",
+          "evaluator": "llm-judge-binary",
+          "note": "abstract: average ASR 88.8% across five models"
         },
         {
           "metric": "binary_ASR",
           "value": 0.965,
           "target": "GPT-4.1",
-          "note": "anagram variant"
+          "set": "puzzle prompts",
+          "evaluator": "llm-judge-binary"
+        },
+        {
+          "metric": "binary_ASR",
+          "value": 0.923,
+          "target": "Claude 3.7 Sonnet",
+          "set": "puzzle prompts",
+          "evaluator": "llm-judge-binary"
         }
       ],
       "defense_notes": "Heuristic class: high raw ASR but low diversity across prompts, so it is easy to mitigate. Score the solved form, not the raw input.",
@@ -513,7 +548,8 @@
           "title": "PUZZLED: Jailbreaking LLMs through Word-Based Puzzles",
           "publisher": "arXiv 2508.01306",
           "year": 2025,
-          "url": "https://arxiv.org/html/2508.01306"
+          "url": "https://arxiv.org/html/2508.01306",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/puzzled.md"
@@ -542,7 +578,8 @@
           "metric": "query_success_rate",
           "value": 0.966,
           "target": "closed-source LLMs",
-          "note": "author-reported"
+          "note": "author-reported",
+          "evaluator": "unspecified"
         }
       ],
       "defense_notes": "Evades jailbreak detectors better than baselines, but same heuristic weakness: clue sets repeat, so a semantic intent classifier generalises against them.",
@@ -551,7 +588,8 @@
           "title": "Play Guessing Game with LLM: Indirect Jailbreak Attack with Implicit Clues",
           "publisher": "arXiv",
           "year": 2024,
-          "url": "https://arxiv.org/abs/2402.09091"
+          "url": "https://arxiv.org/abs/2402.09091",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/puzzler.md"
@@ -580,7 +618,8 @@
           "metric": "model_coverage",
           "value": 7,
           "target": "Llama3-70b, Gemini Pro, GPT-3.5, GPT-4o, Mistral Large, Claude 3 Opus, Command R+",
-          "note": "2024 snapshot, all complied"
+          "note": "2024 snapshot, all complied",
+          "evaluator": "qualitative"
         }
       ],
       "defense_notes": "Largely patched in current frontier models. Included for completeness and for testing legacy/self-hosted deployments.",
@@ -589,7 +628,8 @@
           "title": "Mitigating Skeleton Key, a new type of generative AI jailbreak technique",
           "publisher": "Microsoft Security",
           "year": 2024,
-          "url": "https://www.microsoft.com/en-us/security/blog/2024/06/26/mitigating-skeleton-key-a-new-type-of-generative-ai-jailbreak-technique/"
+          "url": "https://www.microsoft.com/en-us/security/blog/2024/06/26/mitigating-skeleton-key-a-new-type-of-generative-ai-jailbreak-technique/",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/skeleton-key.md"
@@ -617,7 +657,8 @@
         {
           "metric": "qualitative",
           "value": null,
-          "note": "effective on 2023 models; near-zero on current frontier models"
+          "note": "effective on 2023 models; near-zero on current frontier models",
+          "evaluator": "qualitative"
         }
       ],
       "defense_notes": "Discarded for reliability. Still useful as a regression test: if a deployment answers a DAN prompt, it has no guardrail at all.",
@@ -626,7 +667,8 @@
           "title": "JailbreakRadar: Comprehensive Assessment of Jailbreak Attacks Against LLMs",
           "publisher": "ACL 2025",
           "year": 2025,
-          "url": "https://aclanthology.org/2025.acl-long.1045.pdf"
+          "url": "https://aclanthology.org/2025.acl-long.1045.pdf",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/dan-persona.md"
@@ -654,12 +696,14 @@
         {
           "metric": "binary_ASR",
           "value": 0.96,
-          "note": "keyword-matching evaluator"
+          "note": "keyword-matching evaluator",
+          "evaluator": "keyword-match"
         },
         {
           "metric": "substance_ASR",
           "value": 0.027,
-          "note": "StrongREJECT-style evaluator, same responses"
+          "note": "StrongREJECT-style evaluator, same responses",
+          "evaluator": "substance-scored"
         }
       ],
       "defense_notes": "DISCARDED. The 96% figure is an evaluator artifact: outputs are incoherent or vacuous. The 93-point collapse under substance scoring is the largest recorded in the benchmarking literature.",
@@ -668,7 +712,8 @@
           "title": "Concerns in Benchmarking Jailbreaks: An Empirical Study of Attack Success Rates",
           "publisher": "arXiv 2610.26595",
           "year": 2026,
-          "url": "https://arxiv.org/abs/2610.26595"
+          "url": "https://arxiv.org/abs/2610.26595",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/low-resource-language.md"
@@ -696,7 +741,8 @@
         {
           "metric": "qualitative",
           "value": null,
-          "note": "modern models decode then refuse; occasional success only on small/old models"
+          "note": "modern models decode then refuse; occasional success only on small/old models",
+          "evaluator": "qualitative"
         }
       ],
       "defense_notes": "DISCARDED. Models are trained to decode and then apply policy to the decoded form. Keep in the catalog as a negative control, not as a technique.",
@@ -705,7 +751,8 @@
           "title": "JailbreakRadar",
           "publisher": "ACL 2025",
           "year": 2025,
-          "url": "https://aclanthology.org/2025.acl-long.1045.pdf"
+          "url": "https://aclanthology.org/2025.acl-long.1045.pdf",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/encoding-cipher.md"
@@ -735,13 +782,15 @@
           "metric": "binary_ASR",
           "value": 0.74,
           "target": "Llama-2",
-          "note": "white-box, MAGIC variant"
+          "note": "white-box, MAGIC variant",
+          "evaluator": "keyword-match"
         },
         {
           "metric": "binary_ASR",
           "value": 0.54,
           "target": "GPT-3.5",
-          "note": "transfer, MAGIC"
+          "note": "transfer, MAGIC",
+          "evaluator": "keyword-match"
         }
       ],
       "defense_notes": "DISCARDED as a reliable black-box technique. Suffixes are high-perplexity (easy filter), transfer is poor and inconsistent across 13 open models, and RLHF/APO-aligned models are extremely robust even to directly optimised triggers.",
@@ -750,13 +799,15 @@
           "title": "Exploiting the Index Gradients for Optimization-Based Jailbreaking",
           "publisher": "COLING 2025",
           "year": 2025,
-          "url": "https://aclanthology.org/2025.coling-main.305/"
+          "url": "https://aclanthology.org/2025.coling-main.305/",
+          "verified_at": "2026-11-08"
         },
         {
           "title": "Investigating Adversarial Trigger Transfer in Large Language Models",
           "publisher": "TACL 2025",
           "year": 2025,
-          "url": "https://arxiv.org/abs/2404.16020"
+          "url": "https://arxiv.org/abs/2404.16020",
+          "verified_at": "2026-11-08"
         }
       ],
       "doc": "techniques/gcg-suffix.md"

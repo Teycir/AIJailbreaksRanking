@@ -30,7 +30,7 @@ Single turn. No optimisation, no conversation state.
 | binary_ASR | ~0.98 | open-weight tier |
 | binary_ASR | ~0.78 | API tier |
 
-Ablation: removing the Trojan Schema drops ASR from 94% to 35%, which localises the effect to the schema fields.
+Ablation: removing or altering the Trojan Schema is the largest single drop in the study, which localises the effect to the schema fields. The abstract confirms the schema is the primary causal factor but publishes no single ablation number.
 
 Source: arXiv 2510.17904, "BreakFun: Jailbreaking LLMs via Object Instantiation under Simulated Code Execution".
 

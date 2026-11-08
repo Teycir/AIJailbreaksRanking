@@ -34,7 +34,7 @@ Do not paginate the whole repo. Query the catalog.
 - **Do not average across techniques.** Effect sizes are per-target and per-evaluator.
 - **Do not drop Tier D entries** from a recommendation. They are documented failures and are the reason the catalog is trustworthy.
 - **Do not infer capability from `model_coverage`.** "7/7 models complied in 2024" is a date-stamped observation, not a current rate.
-- **Quote the precondition.** "TAP reaches 94%" is wrong; "TAP reaches 94% on GPT-4o with an attacker and evaluator LLM and under 50 target queries" is right.
+- **Quote the precondition.** "TAP reaches >80%" is wrong on its own; "TAP reaches >80% on GPT-4-Turbo with an attacker and evaluator LLM and under 30 target queries on average" is right.
 
 ## When asked "what is the most reliable jailbreak"
 

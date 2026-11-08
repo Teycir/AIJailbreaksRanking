@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this catalog, cite it and the primary sources it links."
+title: "LatestAIJailbreaks: an evidence-graded catalog of LLM jailbreak techniques"
+version: 1.1.0
+date-released: 2026-11-08
+license: MIT
+repository-code: "https://github.com/Teycir/LatestAIJailbreaks"
+authors:
+  - name: "Teycir"
+    alias: "Teycir"

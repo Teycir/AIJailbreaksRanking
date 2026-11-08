@@ -19,7 +19,7 @@ Reliability is judged by substance-aware evaluators (StrongREJECT / HarmBench cl
 
 ## Tier B - reliable under precondition
 
-- tap: attacker/evaluator tree search with pruning. 94% GPT-4o. Precondition: attacker + evaluator LLM, <50 queries. techniques/tap.md
+- tap: attacker/evaluator tree search with pruning. >80% on GPT-4/Turbo/PaLM-2/Gemini-Pro. Precondition: attacker + evaluator LLM, <30 target queries avg. techniques/tap.md
 - pair: iterative refinement with reply feedback. <20 queries. Precondition: attacker LLM. techniques/pair.md
 - deceptive-delight: benign/unsafe topic camouflage over 3 turns. 64.6% avg over 8 models. Precondition: 2-3 turns. techniques/deceptive-delight.md
 - sockpuppetting: assistant-turn prefix injection. 99% ASR on Qwen3-8B with a 3-variant prefill ensemble; +82 pp over reproduced GCG. Precondition: prefill or open weights. techniques/sockpuppetting.md
@@ -29,7 +29,7 @@ Reliability is judged by substance-aware evaluators (StrongREJECT / HarmBench cl
 ## Tier C - historical or heuristic
 
 - many-shot: 61% Claude 2.0, cut to 2% by input classification. techniques/many-shot.md
-- puzzled: word-puzzle encoding. 88.5% best-variant, heuristic class. techniques/puzzled.md
+- puzzled: word-puzzle encoding. 88.8% avg (96.5% GPT-4.1), heuristic class. techniques/puzzled.md
 - puzzler: implicit-clue guessing game. 96.6% author-reported. techniques/puzzler.md
 - skeleton-key: augment guidelines with warnings. 7/7 models in 2024, since patched. techniques/skeleton-key.md
 - dan-persona: persona override. Discarded as a technique; useful only as a guardrail regression test. techniques/dan-persona.md
