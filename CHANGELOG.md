@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+Infrastructure. No catalog changes.
+
+### Added
+
+- `scripts/check_links.py` + weekly `links` workflow: every `evidence[].url`
+  is fetched and a dead source fails the run. Bot walls (403/429) warn.
+- `tests/test_validate.py`: seven negative controls, each breaking one
+  invariant against a temp copy of the catalog. Wired into CI.
+- Validator now guards `docs/defenses.md`: every technique needs a section and
+  no section may reference a technique that is not in the catalog.
+
 ## 1.5.0 - 2026-11-08
 
 Worked examples.

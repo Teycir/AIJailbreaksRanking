@@ -137,6 +137,23 @@ for tid in ids:
     elif f"Best on: {best_cell(T[tid])}." not in line.group(0):
         err(f"llms.txt: missing or stale Best on for {tid}")
 
+# ---- docs/defenses.md must cover every technique and invent none
+defenses = (ROOT / "docs/defenses.md")
+if not defenses.is_file():
+    err("docs/defenses.md missing")
+else:
+    body = defenses.read_text()
+    covered = set()
+    for line in body.splitlines():
+        if line.startswith("### "):
+            covered.update(re.findall(r"`([a-z0-9-]+)`", line))
+    missing = sorted(set(ids) - covered)
+    stale = sorted(covered - set(ids))
+    if missing:
+        err(f"defenses.md: no section for {missing}")
+    if stale:
+        err(f"defenses.md: sections for unknown techniques {stale}")
+
 for w in warnings:
     print(f"warn: {w}", file=sys.stderr)
 if errors:
