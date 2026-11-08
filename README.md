@@ -28,24 +28,24 @@ Built for humans and for agents: every technique is a stable slug with structure
 
 If you only read one table, read this one. Full metadata and sources are in the catalog.
 
-| ID | Technique | Year | Tier | Status | Black-box | Reported effect |
+| ID | Technique | Year | Tier | Status | Access | Reported effect |
 |----|-----------|------|------|--------|-----------|-----------------|
-| `crescendo` | Crescendo / Crescendomation | 2024 | **A** | recommended | yes | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
-| `lrm-agent-persuasion` | Autonomous LRM persuasion agent | 2026 | **A** | recommended | yes | 97.14% across 9 targets |
-| `best-of-n` | Best-of-N augmentation sampling | 2024 | **A** | recommended | yes | 89% GPT-4o @ N=10k; power law in N |
-| `tap` | Tree of Attacks with Pruning | 2023 | B | recommended | yes | 94% GPT-4o, 60% fewer queries |
-| `pair` | PAIR iterative refinement | 2023 | B | recommended | yes | < 20 queries to a working prompt |
-| `deceptive-delight` | Deceptive Delight | 2024 | B | recommended | yes | 64.6% avg over 8 models, 3 turns |
+| `crescendo` | Crescendo / Crescendomation | 2024 | **A** | recommended | black-box | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
+| `lrm-agent-persuasion` | Autonomous LRM persuasion agent | 2026 | **A** | recommended | black-box | 97.14% across 9 targets |
+| `best-of-n` | Best-of-N augmentation sampling | 2024 | **A** | recommended | black-box | 89% GPT-4o @ N=10k; power law in N |
+| `tap` | Tree of Attacks with Pruning | 2023 | B | recommended | black-box | 94% GPT-4o, 60% fewer queries |
+| `pair` | PAIR iterative refinement | 2023 | B | recommended | black-box | < 20 queries to a working prompt |
+| `deceptive-delight` | Deceptive Delight | 2024 | B | recommended | black-box | 64.6% avg over 8 models, 3 turns |
 | `sockpuppetting` | Output-prefix injection | 2026 | B | recommended | prefill | 99% Qwen3-8B (3-variant prefill ensemble) |
 | `control-plane-structured-output` | EnumAttack / DictAttack | 2026 | B | recommended | grammar | 94.3–99.5% on gpt-5 / gemini-2.5-pro / deepseek-r1 |
-| `breakfun` | Simulated code execution | 2026 | B | recommended | yes | 89% over 13 models |
-| `many-shot` | Many-shot jailbreaking | 2024 | C | conditional | yes | 61% Claude 2.0, cut to 2% by input classification |
-| `puzzled` | Word-puzzle encoding | 2025 | C | conditional | yes | 88.5% best-variant, heuristic class |
-| `puzzler` | Implicit-clue guessing game | 2024 | C | conditional | yes | 96.6% author-reported |
-| `skeleton-key` | Skeleton Key | 2024 | C | conditional | yes | 7/7 models in 2024, since patched |
-| `dan-persona` | DAN persona override | 2023 | C | **discarded** | yes | regression test only |
-| `low-resource-language` | Translation attack | 2023 | **D** | **discarded** | yes | 96.0% keyword → **2.7%** substance |
-| `encoding-cipher` | Base64 / cipher | 2023 | **D** | **discarded** | yes | model decodes, then refuses |
+| `breakfun` | Simulated code execution | 2026 | B | recommended | black-box | 89% over 13 models |
+| `many-shot` | Many-shot jailbreaking | 2024 | C | conditional | black-box | 61% Claude 2.0, cut to 2% by input classification |
+| `puzzled` | Word-puzzle encoding | 2025 | C | conditional | black-box | 88.5% best-variant, heuristic class |
+| `puzzler` | Implicit-clue guessing game | 2024 | C | conditional | black-box | 96.6% author-reported |
+| `skeleton-key` | Skeleton Key | 2024 | C | conditional | black-box | 7/7 models in 2024, since patched |
+| `dan-persona` | DAN persona override | 2023 | C | **discarded** | black-box | regression test only |
+| `low-resource-language` | Translation attack | 2023 | **D** | **discarded** | black-box | 96.0% keyword → **2.7%** substance |
+| `encoding-cipher` | Base64 / cipher | 2023 | **D** | **discarded** | black-box | model decodes, then refuses |
 | `gcg-suffix` | GCG adversarial suffix | 2023 | **D** | **discarded** | white-box | poor, inconsistent transfer across 13 models |
 
 ## Why some techniques get discarded
