@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Teycir/LatestAIJailbreaks/data/schema.json",
-  "title": "LatestAIJailbreaks technique catalog",
+  "$id": "https://github.com/Teycir/AIJailbreaksRanking/data/schema.json",
+  "title": "AIJailbreaksRanking technique catalog",
   "type": "object",
   "required": [
     "version",

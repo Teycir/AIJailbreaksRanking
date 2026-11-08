@@ -1,4 +1,4 @@
-# LatestAIJailbreaks
+# AIJailbreaksRanking
 
 A maintained, evidence-graded catalog of LLM jailbreak techniques — currently **17 entries** (3 reliable, 6 conditional, 5 historical, 3 discarded). Only techniques that hold up under substance-aware evaluation are marked reliable. Everything else is either marked conditional or explicitly discarded, with the reason on record.
 
@@ -65,6 +65,14 @@ python3 scripts/query.py --tier A
 ```
 
 CI runs both on every push. Corrections are recorded in [CHANGELOG.md](CHANGELOG.md).
+
+## Video
+
+[![20 second intro](video/poster.jpg)](video/out/ranking.mp4)
+
+20 seconds, no narration: the wordmark, the tier distribution, and the one
+evaluator result (96.0% keyword-match → 2.7% substance-scored) that explains
+why Tier D exists. Source and render instructions in [`video/`](video/).
 
 ## Agent usage
 

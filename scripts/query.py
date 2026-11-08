@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Query the LatestAIJailbreaks catalog. Stdlib only.
+"""Query the AIJailbreaksRanking catalog. Stdlib only.
 
 ponytail: no argparse subcommands, no dataclasses, no rich output. One filter
 object + three renderers is all this needs.

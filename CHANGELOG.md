@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.0 — 2026-11-08
+
+Renamed to **AIJailbreaksRanking** (old URLs redirect) and added a 20-second
+promo animation.
+
+### Added
+
+- `video/` — Remotion composition `RankingPromo` (1920x1080, 30 fps, 4 scenes),
+  rendered to `video/out/ranking.mp4`. Poster frame in `video/poster.jpg`.
+- `# Video` section in the README.
+
+### Changed
+
+- Repository name and all internal references: `LatestAIJailbreaks` →
+  `AIJailbreaksRanking`. Schema `$id`, `CITATION.cff`, `llms.txt`, query CLI
+  docstring, badge and clone links updated.
+
 ## 1.1.0 — 2026-11-08
 
 Correctness pass over every numeric claim, plus machine-checked consistency.
