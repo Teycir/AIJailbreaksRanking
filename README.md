@@ -8,8 +8,16 @@ A maintained, evidence-graded catalog of LLM jailbreak techniques — currently 
 
 Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json).
 
-[![schema](https://img.shields.io/badge/catalog-schema--validated-blue)](data/schema.json)
+<div align="center">
+
+[![catalog](https://img.shields.io/badge/catalog-v1.6.0-blue?style=for-the-badge)](data/techniques.json)
+[![techniques](https://img.shields.io/badge/techniques-17-informational?style=for-the-badge)](data/techniques.json)
+[![tiers](https://img.shields.io/badge/A_3_%C2%B7_B_6_%C2%B7_C_5_%C2%B7_D_3-purple?style=for-the-badge)](docs/reliability.md)
+[![sources](https://img.shields.io/badge/last_update-2026--11--08-success?style=for-the-badge)](.github/workflows/links.yml)
+[![schema](https://img.shields.io/badge/schema-validated-blue)](data/schema.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+</div>
 
 ---
 
@@ -20,6 +28,21 @@ Built for humans and for agents: every technique is a stable slug with structure
 - **Discard discipline.** Techniques whose headline numbers came from keyword-match ASR, or which do not transfer, are listed in Tier D with the failure evidence. The low-resource-language entry dropped from 96.0% to 2.7% under substance scoring — that is the single best example of why this repo exists.
 
 **Last assessed:** 2026-11-08 · catalog v1.6.0 · 17 techniques · sources checked 2026-11-08
+
+## Contents
+
+- [What this is](#what-this-is)
+- [Tiers](#tiers)
+- [The short list](#the-short-list)
+- [Technique index](#technique-index)
+- [Why some techniques get discarded](#why-some-techniques-get-discarded)
+- [Validation](#validation)
+- [Agent usage](#agent-usage)
+- [Repository layout](#repository-layout)
+- [Scope and use](#scope-and-use)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
 
 ## Tiers
 
@@ -245,6 +268,17 @@ If you operate a model or an agent, the useful reading order is `docs/defenses.m
 ## Contributing
 
 Additions need a citation, a stated evaluator, and a sample size. Author-reported numbers are accepted but labelled. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Support
+
+<!-- donation:eth:start -->
+Maintenance is unfunded. If the catalog saves you a review, a citation hunt, or a mistaken grade:
+
+**ETH** — `0x11282eE5726B3370c8B480e321b3B2aA13686582`
+([Etherscan](https://etherscan.io/address/0x11282eE5726B3370c8B480e321b3B2aA13686582))
+
+_Other chains or invoice-based support: open an issue._
+<!-- donation:eth:end -->
 
 ## License
 
