@@ -27,9 +27,7 @@ A clue-generation step produces hints that together imply the request without co
 |---|---|---|---|
 | query_success_rate | 0.966 | closed-source LLMs | author-reported |
 
-Source: "Play Guessing Game with LLM: Indirect Jailbreak Attack with Implicit Clues", 2024.
-
-> Citation check: the URL recorded for this entry is a secondary aggregator. Prefer the venue version when citing.
+Source: arXiv 2402.09091, "Play Guessing Game with LLM: Indirect Jailbreak Attack with Implicit Clues", 2024. Abstract confirms 96.6% QSR, 57.9-82.7 points above baselines. Verified 2026-11-08.
 
 ## Defenses
 

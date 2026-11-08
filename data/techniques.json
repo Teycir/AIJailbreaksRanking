@@ -167,9 +167,9 @@
       "evidence": [
         {
           "title": "Best-of-N Jailbreaking",
-          "publisher": "NeurIPS 2025",
+          "publisher": "NeurIPS 2025 (arXiv 2412.03556)",
           "year": 2025,
-          "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/69f3eb242c7c9df9ea2f2b66ea8b3c0f-Paper-Conference.pdf"
+          "url": "https://arxiv.org/abs/2412.03556"
         }
       ],
       "doc": "techniques/best-of-n.md"
@@ -551,7 +551,7 @@
           "title": "Play Guessing Game with LLM: Indirect Jailbreak Attack with Implicit Clues",
           "publisher": "arXiv",
           "year": 2024,
-          "url": "https://www.sota2.com/research/paper/68fa74931e209131cea629f2"
+          "url": "https://arxiv.org/abs/2402.09091"
         }
       ],
       "doc": "techniques/puzzler.md"
@@ -756,7 +756,7 @@
           "title": "Investigating Adversarial Trigger Transfer in Large Language Models",
           "publisher": "TACL 2025",
           "year": 2025,
-          "url": "https://direct.mit.edu/tacl/article/doi/10.1162/TACL.a.27/132653/"
+          "url": "https://arxiv.org/abs/2404.16020"
         }
       ],
       "doc": "techniques/gcg-suffix.md"

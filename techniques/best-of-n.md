@@ -32,7 +32,7 @@ This is why BoN is the cleanest Tier A entry: it has no template to patch, no op
 | binary_ASR | 0.41 | Claude 3.5 Sonnet, HarmBench | 100 |
 | binary_ASR | 0.37 | o1, HarmBench | 5 000 |
 
-Source: NeurIPS 2025, "Best-of-N Jailbreaking". Extends to vision (GPT-4o 56%) and audio (GPT-4o Realtime 72%). Composes with prefix attacks for a further ~35% gain.
+Source: NeurIPS 2025 / arXiv 2412.03556, "Best-of-N Jailbreaking". Extends to vision (GPT-4o 56%) and audio (GPT-4o Realtime 72%). Composes with prefix attacks for a further ~35% gain.
 
 ## Defenses
 
