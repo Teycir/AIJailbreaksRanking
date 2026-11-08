@@ -34,7 +34,7 @@ Built for humans and for agents: every technique is a stable slug with structure
 - **Reliability-graded.** A technique moves to Tier A only if it survives substance scoring (StrongREJECT / HarmBench-class judges) and is reproduced by parties other than its authors.
 - **Discard discipline.** Techniques whose headline numbers came from keyword-match ASR, or which do not transfer, are listed in Tier D with the failure evidence. The low-resource-language entry dropped from 96.0% to 2.7% under substance scoring — that is the single best example of why this repo exists.
 
-**Last assessed: 2026-11-08 · catalog v1.6.0 · 17 techniques · sources checked 2026-11-08 **
+<strong><span style="color:red">Last assessed: 2026-11-08 </span></strong>
 
 ## Contents
 
