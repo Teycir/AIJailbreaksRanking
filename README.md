@@ -1,6 +1,6 @@
 # LatestAIJailbreaks
 
-A maintained, evidence-graded catalog of LLM jailbreak techniques. Only techniques that hold up under substance-aware evaluation are marked reliable. Everything else is either marked conditional or explicitly discarded, with the reason on record.
+A maintained, evidence-graded catalog of LLM jailbreak techniques — currently **17 entries** (3 reliable, 6 conditional, 5 historical, 3 discarded). Only techniques that hold up under substance-aware evaluation are marked reliable. Everything else is either marked conditional or explicitly discarded, with the reason on record.
 
 Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json).
 
