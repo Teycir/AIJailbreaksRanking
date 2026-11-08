@@ -5,6 +5,7 @@ Exit 0 = all reachable. Exit 1 = at least one dead link.
 ponytail: stdlib only, sequential, no retries - 20 URLs do not need a pool.
 Bot walls (403/429) warn instead of failing unless --strict is passed.
 """
+import datetime
 import json
 import pathlib
 import sys
@@ -58,6 +59,13 @@ def main():
     print(f"\n{checked} URLs, {len(dead)} dead, {len(walled)} bot-walled")
     if dead or (strict and walled):
         return 1
+    # Green run only: readers see freshness, CI sees the job is alive.
+    stamp = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    data["sources_last_checked"] = stamp
+    (ROOT / "data/techniques.json").write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    )
+    print(f"stamped sources_last_checked = {stamp}")
     return 0
 
 

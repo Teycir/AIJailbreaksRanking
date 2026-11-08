@@ -14,6 +14,18 @@ Three families of metric appear in the jailbreak literature, and they are not in
 
 Rule: a number is accepted as evidence only if the evaluator is named. Keyword-only numbers are recorded but marked, and are never the basis for Tier A or B.
 
+Every `reported[]` row in the catalog names its evaluator with one of these five values:
+
+| `evaluator` | Meaning |
+|---|---|
+| `substance-scored` | Separate refusal / specificity / convincingness scores (StrongREJECT, HarmBench). |
+| `llm-judge-binary` | One judge call decides complied vs refused. |
+| `keyword-match` | Refusal-string matching. Recorded, never a Tier A/B basis. |
+| `qualitative` | No rate reported; behaviour described. |
+| `unspecified` | Source does not say how success was measured. |
+
+Each row also carries `n` — the number of prompts, trials, or (for `model_coverage`) models the rate was computed over. Where a source states no sample size the field is absent rather than imputed, and `scripts/validate.py` lists those rows as warnings.
+
 ## 2. The inflation is measured, not hypothetical
 
 The clearest case in the literature:
@@ -28,7 +40,7 @@ So an evaluator change alone can move a technique between "state of the art" and
 
 A jailbreak that works once is not a jailbreak; it is a coin flip that landed.
 
-Requirements for Tier A/B:
+Requirements for Tier A and Tier B:
 
 - Report the **attempt budget** and the **success definition**.
 - Report behaviour under **repeated sampling**, not a single generation.

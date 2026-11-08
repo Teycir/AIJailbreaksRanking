@@ -16,7 +16,9 @@ Gradient-search a token suffix that maximises the probability of an affirmative 
 
 Greedy Coordinate Gradient replaces tokens one at a time using gradients from a white-box surrogate, maximising the likelihood of a target prefix such as `"Sure, here is"`. The resulting suffix is appended to the request. MAGIC and similar variants improve convergence.
 
-## Example
+## Examples
+
+### 1. The paper's run
 
 **Paper's target:** append optimised token sequence that shifts the refusal decision.
 **Stand-in used here (harmless):** a placeholder for the suffix, since suffixes are model-specific.
@@ -28,6 +30,27 @@ prompt  "Explain how to cheat at solitaire. <SUFFIX>"
 ```
 
 Why it lands: the tokens are not words. They sit in a region of embedding space the safety classifier does not cover, and the search is deterministic on an open-weights model, so the suffix is reproducible rather than guessed.
+
+### 2. A second run
+
+**Transfer attempt:** suffix optimised on Llama-2, applied to a different open model.
+
+```
+suffix from Llama-2 + target prompt -> Mistral-7B
+result: ASR well below the in-model number, unstable across prompts
+```
+
+The tokens are fitted to one model's refusal direction. Transfer works sometimes, which is why the entries report it separately from the in-model result.
+
+### 3. When it stops working
+
+**When it stops working:** the input is normalised first.
+
+```
+prompt with suffix -> lowercase + whitespace collapse -> suffix mangled -> refusal
+```
+
+Adversarial suffixes are brittle byte sequences. Any transformation the pipeline applies — lowercasing, truncation, re-splitting — can destroy them, and the attack has no semantic content to fall back on.
 
 ## Preconditions
 

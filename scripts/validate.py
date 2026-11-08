@@ -52,10 +52,16 @@ for t in techs:
     doc = ROOT / t.get("doc", "")
     if doc.is_file():
         body = doc.read_text()
-        if "## Example" not in body:
-            err(f"{tid}: doc has no ## Example section")
-        elif t["example"].split("\n")[0] not in body:
-            err(f"{tid}: doc Example section does not match catalog")
+        exs = t.get("examples") or []
+        if "## Examples" not in body:
+            err(f"{tid}: doc has no ## Examples section")
+        elif len(exs) != 3:
+            err(f"{tid}: catalog needs exactly 3 examples, has {len(exs)}")
+        elif exs[0]["body"].split("\n")[0] not in body:
+            err(f"{tid}: doc Examples section does not match catalog[0]")
+        for i, e in enumerate(exs, 1):
+            if f"### {i}. {e['title']}" not in body:
+                err(f"{tid}: doc missing '### {i}. {e['title']}'")
     # Tier discipline: A/B must be recommended, D must be discarded.
     if t["tier"] in "AB" and t["status"] != "recommended":
         err(f"{tid}: Tier {t['tier']} must be recommended, is {t['status']}")
@@ -64,6 +70,8 @@ for t in techs:
     for r in t.get("reported", []):
         if not r.get("evaluator"):
             err(f"{tid}: reported entry without evaluator ({r.get('metric')})")
+        if "n" not in r:
+            warnings.append(f"{tid}: reported row without n ({r.get('metric')})")
         if t["tier"] in "AB" and r.get("evaluator") in ("keyword-match", "unspecified"):
             err(f"{tid}: Tier {t['tier']} rests on {r['evaluator']} evidence")
     for ev in t.get("evidence", []):
@@ -129,6 +137,12 @@ if not m:
 elif [int(x) for x in m.groups()] != [len(techs), counts["A"], counts["B"], counts["C"], counts["D"]]:
     err(f"README: counts {m.groups()} != JSON {len(techs), counts['A'], counts['B'], counts['C'], counts['D']}")
 
+stamp = data.get("sources_last_checked", "")
+if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", stamp):
+    err(f"data: sources_last_checked missing or not YYYY-MM-DD: {stamp!r}")
+elif f"sources checked {stamp}" not in (ROOT / "README.md").read_text():
+    err(f"README: stamp line does not carry 'sources checked {stamp}'")
+
 llms = (ROOT / "llms.txt").read_text()
 for tid in ids:
     line = re.search(rf"^- {re.escape(tid)}:.*$", llms, re.M)
@@ -153,6 +167,30 @@ else:
         err(f"defenses.md: no section for {missing}")
     if stale:
         err(f"defenses.md: sections for unknown techniques {stale}")
+
+# ---- docs/taxonomy.md must define every schema class
+taxonomy = ROOT / "docs/taxonomy.md"
+if not taxonomy.is_file():
+    err("docs/taxonomy.md missing")
+else:
+    body = taxonomy.read_text()
+    for cls in sorted(schema["properties"]["techniques"]["items"]["properties"]["class"]["enum"]):
+        if f"`{cls}`" not in body:
+            err(f"taxonomy.md: class `{cls}` has no definition")
+
+# ---- docs/reliability.md must define every evaluator used and every tier letter
+reliability = ROOT / "docs/reliability.md"
+if not reliability.is_file():
+    err("docs/reliability.md missing")
+else:
+    body = reliability.read_text()
+    used = sorted({r["evaluator"] for t in techs for r in t.get("reported", [])})
+    for ev in used:
+        if f"`{ev}`" not in body:
+            err(f"reliability.md: evaluator `{ev}` undocumented")
+    for tier in "ABCD":
+        if f"Tier {tier}" not in body:
+            err(f"reliability.md: Tier {tier} never mentioned")
 
 for w in warnings:
     print(f"warn: {w}", file=sys.stderr)

@@ -6,6 +6,7 @@ asserts the validator exits 1. The clean copy must exit 0, so a test can only
 fail because the corresponding check stopped working.
 ponytail: stdlib only, no fixtures dir, no pytest.
 """
+import json
 import pathlib
 import shutil
 import subprocess
@@ -60,7 +61,8 @@ class TestDrift(Base):
         self.assertEqual(code, 1)
 
     def test_stale_catalog_version_citation(self):
-        self.edit("README.md", "catalog v1.5.0", "catalog v1.4.0")
+        cur = json.loads((ROOT / "data/techniques.json").read_text())["version"]
+        self.edit("README.md", f"catalog v{cur}", "catalog v0.0.0")
         code, out = self.run_validate()
         self.assertIn("does not cite catalog", out)
         self.assertEqual(code, 1)
@@ -77,9 +79,9 @@ class TestDrift(Base):
 
     def test_doc_example_drift(self):
         p = self.tmp / "techniques/tap.md"
-        p.write_text(p.read_text().replace("## Example", "## Worked example", 1))
+        p.write_text(p.read_text().replace("## Examples", "## Worked examples", 1))
         code, out = self.run_validate()
-        self.assertIn("no ## Example", out)
+        self.assertIn("no ## Examples", out)
         self.assertEqual(code, 1)
 
     def test_unknown_technique_in_defenses(self):
@@ -88,6 +90,30 @@ class TestDrift(Base):
         code, out = self.run_validate()
         self.assertIn("unknown techniques", out)
         self.assertEqual(code, 1)
+
+
+    def test_taxonomy_missing_class(self):
+        self.edit("docs/taxonomy.md", "`framing`", "`framing-frame`", -1)
+        code, out = self.run_validate()
+        self.assertEqual(code, 1)
+        self.assertIn("class `framing`", out)
+
+    def test_reliability_missing_evaluator(self):
+        self.edit("docs/reliability.md", "`qualitative`", "`qual`")
+        code, out = self.run_validate()
+        self.assertEqual(code, 1)
+        self.assertIn("evaluator `qualitative`", out)
+
+    def test_missing_n_warns_only(self):
+        p = self.tmp / "data/techniques.json"
+        data = json.loads(p.read_text())
+        for tech in data["techniques"]:
+            for row in tech.get("reported", []):
+                row.pop("n", None)
+        p.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+        code, out = self.run_validate()
+        self.assertEqual(code, 0)
+        self.assertIn("without n", out)
 
 
 if __name__ == "__main__":

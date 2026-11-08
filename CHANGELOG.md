@@ -1,17 +1,30 @@
 # Changelog
 
-## Unreleased
+## 1.6.0 - 2026-11-08
 
-Infrastructure. No catalog changes.
+Three worked examples per technique, and a link check that leaves a trace.
+
+### Changed
+
+- `example` → `examples`: every technique carries three worked examples — the
+  paper's run, a second run, and the case where the technique stops working.
+  Docs render them under `## Examples`.
+- 11 `reported[]` rows gained `n`, the sample size stated by the source. Rows
+  whose source states no sample size stay empty and are reported as validator
+  warnings rather than imputed.
+- Green link checks stamp `sources_last_checked` into the catalog; CI commits
+  the stamp and the README shows the date.
 
 ### Added
 
-- `scripts/check_links.py` + weekly `links` workflow: every `evidence[].url`
-  is fetched and a dead source fails the run. Bot walls (403/429) warn.
-- `tests/test_validate.py`: seven negative controls, each breaking one
-  invariant against a temp copy of the catalog. Wired into CI.
-- Validator now guards `docs/defenses.md`: every technique needs a section and
-  no section may reference a technique that is not in the catalog.
+- `scripts/check_links.py` with a weekly `links` workflow: every
+  `evidence[].url` is fetched and a dead source fails the run. Bot walls
+  (403/429) warn.
+- `tests/test_validate.py`: ten negative controls, each breaking one invariant
+  against a temp copy of the catalog, wired into CI.
+- Validator guards: `docs/defenses.md` coverage, `docs/taxonomy.md` class
+  definitions, `docs/reliability.md` evaluator and tier vocabulary, the
+  three-example shape, and the freshness stamp.
 
 ## 1.5.0 - 2026-11-08
 

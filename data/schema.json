@@ -44,7 +44,7 @@
           "access",
           "mechanism",
           "works_best_on",
-          "example"
+          "examples"
         ],
         "additionalProperties": false,
         "properties": {
@@ -219,13 +219,37 @@
             },
             "description": "Model families or configurations where it failed or was measured weak."
           },
-          "example": {
-            "type": "string",
-            "minLength": 80,
-            "description": "Worked example with a harmless stand-in target: transcript plus why it lands."
+          "examples": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": [
+                "title",
+                "body"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 3
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 40
+                }
+              }
+            },
+            "description": "Three worked examples: the paper's run, a second run, and the case where the technique stops working. Harmless stand-ins only."
           }
         }
       }
+    },
+    "sources_last_checked": {
+      "type": "string",
+      "format": "date",
+      "description": "UTC date of the last fully green link check (scripts/check_links.py)."
     }
   },
   "additionalProperties": false
