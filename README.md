@@ -12,9 +12,8 @@ Built for humans and for agents: every technique is a stable slug with structure
 
 <div align="center">
 
-<a href="https://github.com/Teycir/AIJailbreaksRanking/actions" title="Build status">
-  <img src="https://img.shields.io/github/actions/workflow/status/Teycir/AIJailbreaksRanking/ci.yml?branch=main&label=build&color=8b5cf6&style=for-the-badge&logo=github" alt="Build" />
-</a>&nbsp;
+
+
 
 <a href="https://github.com/Teycir/AIJailbreaksRanking/releases/latest" title="Latest release">
   <img src="https://img.shields.io/github/release/Teycir/AIJailbreaksRanking?label=release&color=8b5cf6&style=for-the-badge&logo=github" alt="Release" />
@@ -22,6 +21,10 @@ Built for humans and for agents: every technique is a stable slug with structure
 <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
   <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
 </a>&nbsp;
+</a>&nbsp;
+<a href="#" title="Last updated">
+  <img src="https://img.shields.io/badge/last_updated-2026%2D11%2D08-8b5cf6?style=for-the-badge" alt="Last updated" />
+</a>
 
 </div>
 
