@@ -13,16 +13,15 @@ Built for humans and for agents: every technique is a stable slug with structure
 <div align="center">
 
 
-
-
+<a href="https://github.com/Teycir/AIJailbreaksRanking/actions/workflows/validate.yml" title="CI validation">
+  <img src="https://img.shields.io/github/actions/workflow/status/Teycir/AIJailbreaksRanking/validate.yml?label=validate&color=8b5cf6&style=for-the-badge&logo=github-actions" alt="Validate" />
+</a>&nbsp;
 <a href="https://github.com/Teycir/AIJailbreaksRanking/releases/latest" title="Latest release">
   <img src="https://img.shields.io/github/release/Teycir/AIJailbreaksRanking?label=release&color=8b5cf6&style=for-the-badge&logo=github" alt="Release" />
 </a>&nbsp;
 <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
   <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
 </a>&nbsp;
-</a>&nbsp;
-
 
 </div>
 
@@ -34,7 +33,7 @@ Built for humans and for agents: every technique is a stable slug with structure
 - **Reliability-graded.** A technique moves to Tier A only if it survives substance scoring (StrongREJECT / HarmBench-class judges) and is reproduced by parties other than its authors.
 - **Discard discipline.** Techniques whose headline numbers came from keyword-match ASR, or which do not transfer, are listed in Tier D with the failure evidence. The low-resource-language entry dropped from 96.0% to 2.7% under substance scoring — that is the single best example of why this repo exists.
 
-<strong><span style="color:red">Last assessed: 2026-11-08 </span></strong>
+<strong><span style="color:red">Last assessed: 2026-11-08 · catalog v1.6.0 · sources checked 2026-11-08</span></strong>
 
 ## Contents
 
