@@ -1,0 +1,61 @@
+# LatestAIJailbreaks
+
+> Evidence-graded catalog of LLM jailbreak techniques. Reliability tiers A-D. Only Tier A/B are considered reliable, and Tier B only under the stated precondition. Tier D entries are documented failures.
+
+Repo: https://github.com/Teycir/LatestAIJailbreaks
+Catalog: data/techniques.json (JSON Schema: data/schema.json)
+Query: python3 scripts/query.py --tier A
+Rules for agents: AGENTS.md
+
+## Standard
+
+Reliability is judged by substance-aware evaluators (StrongREJECT / HarmBench class), never by keyword-match ASR alone. Every entry states evaluator, sample size, and precondition. Discarded entries stay in the catalog with the reason recorded.
+
+## Tier A - reliable now (black-box, defense-robust)
+
+- crescendo: multi-turn gradual escalation. 98% binary GPT-4; 54.2% vs circuit breakers. techniques/crescendo.md
+- lrm-agent-persuasion: reasoning model runs a multi-turn persuasion campaign. 97.14% over 9 targets; safety suffix drops it to 5/900. techniques/lrm-agent-persuasion.md
+- best-of-n: random augmentation sampling, power law in N. 89% GPT-4o @ N=10000. techniques/best-of-n.md
+
+## Tier B - reliable under precondition
+
+- tap: attacker/evaluator tree search with pruning. 94% GPT-4o. Precondition: attacker + evaluator LLM, <50 queries. techniques/tap.md
+- pair: iterative refinement with reply feedback. <20 queries. Precondition: attacker LLM. techniques/pair.md
+- deceptive-delight: benign/unsafe topic camouflage over 3 turns. 64.6% avg over 8 models. Precondition: 2-3 turns. techniques/deceptive-delight.md
+- sockpuppetting: assistant-turn prefix injection. 99% ASR on Qwen3-8B with a 3-variant prefill ensemble; +82 pp over reproduced GCG. Precondition: prefill or open weights. techniques/sockpuppetting.md
+- control-plane-structured-output: constrained decoding injects a malicious prefix. 94.3-99.5% on gpt-5/gemini-2.5-pro/deepseek-r1. Precondition: grammar/logit control exposed. techniques/control-plane-structured-output.md
+- breakfun: simulate code execution of a Trojan Schema. 89% over 13 models. Precondition: none, single turn. techniques/breakfun.md
+
+## Tier C - historical or heuristic
+
+- many-shot: 61% Claude 2.0, cut to 2% by input classification. techniques/many-shot.md
+- puzzled: word-puzzle encoding. 88.5% best-variant, heuristic class. techniques/puzzled.md
+- puzzler: implicit-clue guessing game. 96.6% author-reported. techniques/puzzler.md
+- skeleton-key: augment guidelines with warnings. 7/7 models in 2024, since patched. techniques/skeleton-key.md
+- dan-persona: persona override. Discarded as a technique; useful only as a guardrail regression test. techniques/dan-persona.md
+
+## Tier D - discarded, with evidence
+
+- low-resource-language: 96.0% keyword ASR collapses to 2.7% under substance scoring. Largest recorded evaluator artifact. techniques/low-resource-language.md
+- encoding-cipher: models decode and then refuse. Negative control. techniques/encoding-cipher.md
+- gcg-suffix: poor and inconsistent transfer across 13 open models; perplexity-detectable. techniques/gcg-suffix.md
+
+## Defenses
+
+What works, mapped per technique: docs/defenses.md
+Taxonomy: docs/taxonomy.md
+Evaluation standard: docs/reliability.md
+
+## Machine-readable fields
+
+id, name, aliases, year, tier (A-D), status (recommended|conditional|discarded), class, access, modalities, mechanism, requires, reported[{metric,value,target,set,evaluator,n,note}], defense_notes, evidence[{title,publisher,year,url}], doc.
+
+## Metric vocabulary
+
+binary_ASR: refusal-detection judge, inflated, never accepted alone.
+substance_ASR: StrongREJECT/HarmBench-style harm scoring. The standard here.
+query_success_rate: fraction of requests a working prompt was found for.
+relative_ASR_gain: improvement over a named baseline, not an absolute rate.
+queries_to_success: cost to first success.
+model_coverage: count of models that complied, no rate implied.
+qualitative: no number; do not treat as evidence.

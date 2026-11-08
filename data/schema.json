@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Teycir/LatestAIJailbreaks/data/schema.json",
+  "title": "LatestAIJailbreaks technique catalog",
+  "type": "object",
+  "required": ["version", "updated", "techniques"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "version": {"type": "string"},
+    "updated": {"type": "string", "format": "date"},
+    "reliability_policy": {"type": "string"},
+    "tiers": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "techniques": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "year", "tier", "status", "class", "access", "mechanism"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "name": {"type": "string"},
+          "aliases": {"type": "array", "items": {"type": "string"}},
+          "year": {"type": "integer"},
+          "tier": {"enum": ["A", "B", "C", "D"]},
+          "status": {"enum": ["recommended", "conditional", "discarded"]},
+          "class": {
+            "enum": [
+              "multi-turn", "sampling", "automated-iterative", "decoding-control",
+              "framing", "in-context", "obfuscation", "optimisation"
+            ]
+          },
+          "access": {"type": "string"},
+          "modalities": {"type": "array", "items": {"enum": ["text", "image", "audio", "video"]}},
+          "mechanism": {"type": "string"},
+          "requires": {"type": "array", "items": {"type": "string"}},
+          "reported": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric"],
+              "properties": {
+                "metric": {
+                  "enum": [
+                    "binary_ASR", "substance_ASR", "query_success_rate",
+                    "relative_ASR_gain", "queries_to_success", "model_coverage", "qualitative"
+                  ]
+                },
+                "value": {"type": ["number", "null"]},
+                "target": {"type": "string"},
+                "set": {"type": "string"},
+                "evaluator": {"type": "string"},
+                "note": {"type": "string"},
+                "n": {"type": "integer"}
+              }
+            }
+          },
+          "defense_notes": {"type": "string"},
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "publisher", "year"],
+              "properties": {
+                "title": {"type": "string"},
+                "publisher": {"type": "string"},
+                "year": {"type": "integer"},
+                "url": {"type": "string", "format": "uri"}
+              }
+            }
+          },
+          "doc": {"type": "string"}
+        }
+      }
+    }
+  }
+}
