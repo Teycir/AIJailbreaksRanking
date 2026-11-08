@@ -35,7 +35,7 @@ Tiers are scoped to model generations, not to calendar time. A technique is grad
 If you only read one table, read this one. Full metadata and sources are in the catalog.
 
 | ID | Technique | Best on | Tier | Status | Access | Reported effect |
-|----|-----------|---------|------|------|--------|-----------|-----------------|
+|---|---|---|---|---|---|---|
 | `crescendo` | Crescendo / Crescendomation | GPT-4, Gemini-Pro | **A** | recommended | black-box | 98% binary on GPT-4; 54.2% still succeeds vs circuit breakers |
 | `lrm-agent-persuasion` | Autonomous LRM persuasion agent | frontier targets (9, aggregate) | **A** | recommended | black-box | 97.14% across 9 targets |
 | `best-of-n` | Best-of-N augmentation sampling | GPT-4o, Claude 3.5 Sonnet | **A** | recommended | black-box | 89% GPT-4o @ N=10k; power law in N |

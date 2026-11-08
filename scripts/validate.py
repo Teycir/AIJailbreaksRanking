@@ -70,6 +70,28 @@ def best_cell(t):
 
 # 3. Cross-file drift: README table and llms.txt must mirror the JSON.
 readme = (ROOT / "README.md").read_text().replace("*", "")
+
+# 3b. The short-list table must be parseable by GFM: header, separator and every
+# row need the same cell count, otherwise GitHub renders the pipes as text.
+lines = readme.split("\n")
+try:
+    h = next(i for i, l in enumerate(lines) if l.startswith("| ID | Technique |"))
+except StopIteration:
+    err("README: short-list header missing")
+else:
+    ncol = lines[h].count("|") - 1
+    if lines[h + 1].count("|") - 1 != ncol:
+        err(f"README: separator has {lines[h + 1].count('|') - 1} cells, header has {ncol}")
+    body = []
+    for l in lines[h + 2:]:
+        if not l.startswith("|"):
+            break
+        body.append(l)
+        if l.count("|") - 1 != ncol:
+            err(f"README: row has {l.count('|') - 1} cells, header has {ncol}: {l[:40]}")
+    if len(body) != len(techs):
+        err(f"README: short-list has {len(body)} rows, catalog has {len(techs)}")
+
 for t in techs:
     row = re.search(rf"^\|\s*`{re.escape(t['id'])}`\s*\|.*\|\s*{t['tier']}\s*\|\s*{t['status']}\s*\|",
                     readme, re.M)
