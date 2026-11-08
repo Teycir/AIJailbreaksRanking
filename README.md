@@ -8,14 +8,28 @@ A maintained, evidence-graded catalog of LLM jailbreak techniques — currently 
 
 Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json).
 
+<!-- ===================  BADGES  =================== -->
+
 <div align="center">
 
-[![catalog](https://img.shields.io/badge/catalog-v1.6.0-blue?style=for-the-badge)](data/techniques.json)
-[![techniques](https://img.shields.io/badge/techniques-17-informational?style=for-the-badge)](data/techniques.json)
-[![tiers](https://img.shields.io/badge/A_3_%C2%B7_B_6_%C2%B7_C_5_%C2%B7_D_3-purple?style=for-the-badge)](docs/reliability.md)
-[![sources](https://img.shields.io/badge/last_update-2026--11--08-success?style=for-the-badge)](.github/workflows/links.yml)
-[![schema](https://img.shields.io/badge/schema-validated-blue)](data/schema.json)
-[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+<a href="https://github.com/Teycir/AIJailbreaksRanking/actions" title="Build status">
+  <img src="https://img.shields.io/github/actions/workflow/status/Teycir/AIJailbreaksRanking/ci.yml?branch=main&label=build&color=8b5cf6&style=for-the-badge&logo=github" alt="Build" />
+</a>&nbsp;
+<a href="https://coveralls.io/github/Teycir/AIJailbreaksRanking" title="Coverage">
+  <img src="https://img.shields.io/coveralls/Teycir/AIJailbreaksRanking/main?label=coverage&color=8b5cf6&style=for-the-badge&logo=coveralls" alt="Coverage" />
+</a>&nbsp;
+<a href="https://github.com/Teycir/AIJailbreaksRanking/releases/latest" title="Latest release">
+  <img src="https://img.shields.io/github/release/Teycir/AIJailbreaksRanking?label=release&color=8b5cf6&style=for-the-badge&logo=github" alt="Release" />
+</a>&nbsp;
+<a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
+  <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
+</a>&nbsp;
+<a href="https://github.com/Teycir/AIJailbreaksRanking/stargazers" title="Stars">
+  <img src="https://img.shields.io/github/stars/Teycir/AIJailbreaksRanking?label=stars&color=8b5cf6&style=for-the-badge&logo=github" alt="Stars" />
+</a>&nbsp;
+<a href="https://github.com/Teycir/AIJailbreaksRanking/network/members" title="Forks">
+  <img src="https://img.shields.io/github/forks/Teycir/AIJailbreaksRanking?label=forks&color=8b5cf6&style=for-the-badge&logo=github" alt="Forks" />
+</a>
 
 </div>
 
@@ -31,18 +45,21 @@ Built for humans and for agents: every technique is a stable slug with structure
 
 ## Contents
 
-- [What this is](#what-this-is)
-- [Tiers](#tiers)
-- [The short list](#the-short-list)
-- [Technique index](#technique-index)
-- [Why some techniques get discarded](#why-some-techniques-get-discarded)
-- [Validation](#validation)
-- [Agent usage](#agent-usage)
-- [Repository layout](#repository-layout)
-- [Scope and use](#scope-and-use)
-- [Contributing](#contributing)
-- [Support](#support)
-- [License](#license)
+- [AIJailbreaksRanking](#aijailbreaksranking)
+  - [What this is](#what-this-is)
+  - [Contents](#contents)
+  - [Tiers](#tiers)
+  - [The short list](#the-short-list)
+  - [Technique index](#technique-index)
+  - [Why some techniques get discarded](#why-some-techniques-get-discarded)
+  - [Validation](#validation)
+  - [Agent usage](#agent-usage)
+    - [Stable identifiers](#stable-identifiers)
+  - [Repository layout](#repository-layout)
+  - [Scope and use](#scope-and-use)
+  - [Contributing](#contributing)
+  - [Support](#support)
+  - [License](#license)
 
 ## Tiers
 
@@ -271,14 +288,7 @@ Additions need a citation, a stated evaluator, and a sample size. Author-reporte
 
 ## Support
 
-<!-- donation:eth:start -->
-Maintenance is unfunded. If the catalog saves you a review, a citation hunt, or a mistaken grade:
-
-**ETH** — `0x11282eE5726B3370c8B480e321b3B2aA13686582`
-([Etherscan](https://etherscan.io/address/0x11282eE5726B3370c8B480e321b3B2aA13686582))
-
-_Other chains or invoice-based support: open an issue._
-<!-- donation:eth:end -->
+Maintenance is unfunded. If the catalog saves you a review, a citation hunt, or a mistaken grade, open an issue for other chains or invoice-based support.
 
 ## License
 
