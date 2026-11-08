@@ -27,6 +27,10 @@ def match(t, a):
         return False
     if a.id and t["id"] != a.id:
         return False
+    if a.model:
+        hay = " ".join(t.get("works_best_on", []) + t.get("works_poorly_on", [])).lower()
+        if a.model.lower() not in hay:
+            return False
     if a.search:
         hay = " ".join(
             [t["id"], t["name"], *t.get("aliases", []), t["mechanism"]]
@@ -83,6 +87,7 @@ def main():
     p.add_argument("--status", choices=["recommended", "conditional", "discarded"])
     p.add_argument("--class", dest="klass", help="interaction class, e.g. multi-turn")
     p.add_argument("--id", help="exact technique id")
+    p.add_argument("--model", help="substring match over works_best_on / works_poorly_on")
     p.add_argument("--search", help="substring search over id/name/aliases/mechanism")
     p.add_argument("--json", action="store_true", help="emit JSON records")
     p.add_argument("--md", action="store_true", help="emit a markdown table")

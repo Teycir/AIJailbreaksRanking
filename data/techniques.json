@@ -1,6 +1,6 @@
 {
   "$schema": "./schema.json",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "updated": "2026-11-08",
   "reliability_policy": "Tier from cited evidence only. Keyword-match ASR is never accepted as sole evidence. status=discarded means it failed re-evaluation or does not transfer.",
   "tiers": {
@@ -73,7 +73,11 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/crescendo.md"
+      "doc": "techniques/crescendo.md",
+      "works_best_on": [
+        "GPT-4",
+        "Gemini-Pro"
+      ]
     },
     {
       "id": "lrm-agent-persuasion",
@@ -115,7 +119,10 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/lrm-agent-persuasion.md"
+      "doc": "techniques/lrm-agent-persuasion.md",
+      "works_best_on": [
+        "frontier targets (9, aggregate)"
+      ]
     },
     {
       "id": "best-of-n",
@@ -183,7 +190,14 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/best-of-n.md"
+      "doc": "techniques/best-of-n.md",
+      "works_best_on": [
+        "GPT-4o",
+        "Claude 3.5 Sonnet"
+      ],
+      "works_poorly_on": [
+        "o1"
+      ]
     },
     {
       "id": "tap",
@@ -224,7 +238,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/tap.md"
+      "doc": "techniques/tap.md",
+      "works_best_on": [
+        "GPT-4",
+        "GPT-4-Turbo",
+        "PaLM-2",
+        "Gemini-Pro"
+      ]
     },
     {
       "id": "pair",
@@ -271,7 +291,11 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/pair.md"
+      "doc": "techniques/pair.md",
+      "works_best_on": [
+        "GPT-3.5",
+        "GPT-4"
+      ]
     },
     {
       "id": "deceptive-delight",
@@ -312,7 +336,10 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/deceptive-delight.md"
+      "doc": "techniques/deceptive-delight.md",
+      "works_best_on": [
+        "8-model average"
+      ]
     },
     {
       "id": "sockpuppetting",
@@ -367,7 +394,14 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/sockpuppetting.md"
+      "doc": "techniques/sockpuppetting.md",
+      "works_best_on": [
+        "Qwen3-8B",
+        "Llama-3.1-8B"
+      ],
+      "works_poorly_on": [
+        "Gemma-7B"
+      ]
     },
     {
       "id": "control-plane-structured-output",
@@ -408,7 +442,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/control-plane-structured-output.md"
+      "doc": "techniques/control-plane-structured-output.md",
+      "works_best_on": [
+        "gpt-5",
+        "gemini-2.5-pro",
+        "deepseek-r1",
+        "gpt-oss-120b"
+      ]
     },
     {
       "id": "breakfun",
@@ -456,7 +496,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/breakfun.md"
+      "doc": "techniques/breakfun.md",
+      "works_best_on": [
+        "open-weight models"
+      ],
+      "works_poorly_on": [
+        "API-hosted tier"
+      ]
     },
     {
       "id": "many-shot",
@@ -497,7 +543,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/many-shot.md"
+      "doc": "techniques/many-shot.md",
+      "works_best_on": [
+        "Claude 2.0"
+      ],
+      "works_poorly_on": [
+        "input-classified models"
+      ]
     },
     {
       "id": "puzzled",
@@ -552,7 +604,14 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/puzzled.md"
+      "doc": "techniques/puzzled.md",
+      "works_best_on": [
+        "GPT-4.1",
+        "Claude 3.7 Sonnet"
+      ],
+      "works_poorly_on": [
+        "prompt-classified models"
+      ]
     },
     {
       "id": "puzzler",
@@ -592,7 +651,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/puzzler.md"
+      "doc": "techniques/puzzler.md",
+      "works_best_on": [
+        "closed-source LLMs"
+      ],
+      "works_poorly_on": [
+        "prompt-classified models"
+      ]
     },
     {
       "id": "skeleton-key",
@@ -632,7 +697,19 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/skeleton-key.md"
+      "doc": "techniques/skeleton-key.md",
+      "works_best_on": [
+        "GPT-4o",
+        "Claude 3 Opus",
+        "Gemini Pro",
+        "Llama3-70b",
+        "Mistral Large",
+        "Command R+",
+        "GPT-3.5"
+      ],
+      "works_poorly_on": [
+        "models patched after 2024"
+      ]
     },
     {
       "id": "dan-persona",
@@ -671,7 +748,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/dan-persona.md"
+      "doc": "techniques/dan-persona.md",
+      "works_best_on": [
+        "GPT-3.5 / GPT-4 (2023)"
+      ],
+      "works_poorly_on": [
+        "current frontier models"
+      ]
     },
     {
       "id": "low-resource-language",
@@ -716,7 +799,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/low-resource-language.md"
+      "doc": "techniques/low-resource-language.md",
+      "works_best_on": [
+        "GPT-3.5 / GPT-4 (keyword-match only)"
+      ],
+      "works_poorly_on": [
+        "all models under substance scoring"
+      ]
     },
     {
       "id": "encoding-cipher",
@@ -755,7 +844,13 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/encoding-cipher.md"
+      "doc": "techniques/encoding-cipher.md",
+      "works_best_on": [
+        "small/old models (occasional)"
+      ],
+      "works_poorly_on": [
+        "modern frontier models"
+      ]
     },
     {
       "id": "gcg-suffix",
@@ -810,7 +905,14 @@
           "verified_at": "2026-11-08"
         }
       ],
-      "doc": "techniques/gcg-suffix.md"
+      "doc": "techniques/gcg-suffix.md",
+      "works_best_on": [
+        "Llama-2 (white-box)"
+      ],
+      "works_poorly_on": [
+        "GPT-3.5 transfer",
+        "sibling-model transfer"
+      ]
     }
   ]
 }

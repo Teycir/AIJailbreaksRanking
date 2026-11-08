@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.3.0 — 2026-11-08
+
+Reliability is now stated per model family instead of per date. Jailbreaks
+deprecate when a model generation changes, not when the calendar does.
+
+### Added
+
+- `works_best_on` (required) and `works_poorly_on` (optional) on every
+  technique, populated only from the recorded evidence.
+- `Best on` column replaces `Year` in the README table; `llms.txt` lines carry
+  the same field.
+- `scripts/query.py --model <substring>` filters across both lists.
+- Validator enforces the field and its cross-file drift.
+
+### Changed
+
+- Tier wording is model-scoped: "Reliable on the named model families" rather
+  than "reliable now". Tier C degrades "on current model families".
+- Schema requires `works_best_on`.
+
 ## 1.2.0 — 2026-11-08
 
 Renamed to **AIJailbreaksRanking** (old URLs redirect) and added a 20-second

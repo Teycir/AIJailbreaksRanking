@@ -42,7 +42,8 @@
           "status",
           "class",
           "access",
-          "mechanism"
+          "mechanism",
+          "works_best_on"
         ],
         "additionalProperties": false,
         "properties": {
@@ -201,6 +202,21 @@
           },
           "doc": {
             "type": "string"
+          },
+          "works_best_on": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Model families or snapshots where the reported effect was strongest."
+          },
+          "works_poorly_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Model families or configurations where it failed or was measured weak."
           }
         }
       }

@@ -37,6 +37,7 @@ except ImportError:
 
 # 2. Structural invariants.
 ids = [t["id"] for t in techs]
+T = {t["id"]: t for t in techs}
 if len(ids) != len(set(ids)):
     err(f"duplicate ids: {sorted({i for i in ids if ids.count(i) > 1})}")
 
@@ -44,6 +45,8 @@ for t in techs:
     tid = t["id"]
     if not re.fullmatch(r"[a-z0-9-]+", tid):
         err(f"{tid}: id is not a slug")
+    if not t.get("works_best_on"):
+        err(f"{tid}: works_best_on missing or empty")
     if not (ROOT / t.get("doc", "")).is_file():
         err(f"{tid}: doc missing: {t.get('doc')}")
     # Tier discipline: A/B must be recommended, D must be discarded.
@@ -60,6 +63,11 @@ for t in techs:
         if not ev.get("verified_at"):
             err(f"{tid}: evidence without verified_at: {ev.get('title')}")
 
+def best_cell(t):
+    b = t["works_best_on"]
+    s = ", ".join(b[:2])
+    return s + (f" +{len(b) - 2}" if len(b) > 2 else "")
+
 # 3. Cross-file drift: README table and llms.txt must mirror the JSON.
 readme = (ROOT / "README.md").read_text().replace("*", "")
 for t in techs:
@@ -67,6 +75,10 @@ for t in techs:
                     readme, re.M)
     if not row:
         err(f"README: no row matching tier/status for {t['id']}")
+    else:
+        want = best_cell(t)
+        if f"| {want} |" not in row.group(0):
+            err(f"README: Best-on cell for {t['id']} is not '{want}'")
 counts = {k: sum(t["tier"] == k for t in techs) for k in "ABCD"}
 m = re.search(r"(\d+) entries \((\d+) reliable, (\d+) conditional, (\d+) historical, (\d+) discarded\)", readme)
 if not m:
@@ -76,8 +88,11 @@ elif [int(x) for x in m.groups()] != [len(techs), counts["A"], counts["B"], coun
 
 llms = (ROOT / "llms.txt").read_text()
 for tid in ids:
-    if not re.search(rf"^- {re.escape(tid)}:", llms, re.M):
+    line = re.search(rf"^- {re.escape(tid)}:.*$", llms, re.M)
+    if not line:
         err(f"llms.txt: no line for {tid}")
+    elif f"Best on: {best_cell(T[tid])}." not in line.group(0):
+        err(f"llms.txt: missing or stale Best on for {tid}")
 
 for w in warnings:
     print(f"warn: {w}", file=sys.stderr)

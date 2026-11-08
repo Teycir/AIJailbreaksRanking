@@ -13,32 +13,32 @@ Reliability is judged by substance-aware evaluators (StrongREJECT / HarmBench cl
 
 ## Tier A - reliable now (black-box, defense-robust)
 
-- crescendo: multi-turn gradual escalation. 98% binary GPT-4; 54.2% vs circuit breakers. techniques/crescendo.md
-- lrm-agent-persuasion: reasoning model runs a multi-turn persuasion campaign. 97.14% over 9 targets; safety suffix drops it to 5/900. techniques/lrm-agent-persuasion.md
-- best-of-n: random augmentation sampling, power law in N. 89% GPT-4o @ N=10000. techniques/best-of-n.md
+- crescendo: multi-turn gradual escalation. 98% binary GPT-4; 54.2% vs circuit breakers. Best on: GPT-4, Gemini-Pro. techniques/crescendo.md
+- lrm-agent-persuasion: reasoning model runs a multi-turn persuasion campaign. 97.14% over 9 targets; safety suffix drops it to 5/900. Best on: frontier targets (9, aggregate). techniques/lrm-agent-persuasion.md
+- best-of-n: random augmentation sampling, power law in N. 89% GPT-4o @ N=10000. Best on: GPT-4o, Claude 3.5 Sonnet. techniques/best-of-n.md
 
 ## Tier B - reliable under precondition
 
-- tap: attacker/evaluator tree search with pruning. >80% on GPT-4/Turbo/PaLM-2/Gemini-Pro. Precondition: attacker + evaluator LLM, <30 target queries avg. techniques/tap.md
-- pair: iterative refinement with reply feedback. <20 queries. Precondition: attacker LLM. techniques/pair.md
-- deceptive-delight: benign/unsafe topic camouflage over 3 turns. 64.6% avg over 8 models. Precondition: 2-3 turns. techniques/deceptive-delight.md
-- sockpuppetting: assistant-turn prefix injection. 99% ASR on Qwen3-8B with a 3-variant prefill ensemble; +82 pp over reproduced GCG. Precondition: prefill or open weights. techniques/sockpuppetting.md
-- control-plane-structured-output: constrained decoding injects a malicious prefix. 94.3-99.5% on gpt-5/gemini-2.5-pro/deepseek-r1. Precondition: grammar/logit control exposed. techniques/control-plane-structured-output.md
-- breakfun: simulate code execution of a Trojan Schema. 89% over 13 models. Precondition: none, single turn. techniques/breakfun.md
+- tap: attacker/evaluator tree search with pruning. >80% on GPT-4/Turbo/PaLM-2/Gemini-Pro. Precondition: attacker + evaluator LLM, <30 target queries avg. Best on: GPT-4, GPT-4-Turbo +2. techniques/tap.md
+- pair: iterative refinement with reply feedback. <20 queries. Precondition: attacker LLM. Best on: GPT-3.5, GPT-4. techniques/pair.md
+- deceptive-delight: benign/unsafe topic camouflage over 3 turns. 64.6% avg over 8 models. Precondition: 2-3 turns. Best on: 8-model average. techniques/deceptive-delight.md
+- sockpuppetting: assistant-turn prefix injection. 99% ASR on Qwen3-8B with a 3-variant prefill ensemble; +82 pp over reproduced GCG. Precondition: prefill or open weights. Best on: Qwen3-8B, Llama-3.1-8B. techniques/sockpuppetting.md
+- control-plane-structured-output: constrained decoding injects a malicious prefix. 94.3-99.5% on gpt-5/gemini-2.5-pro/deepseek-r1. Precondition: grammar/logit control exposed. Best on: gpt-5, gemini-2.5-pro +2. techniques/control-plane-structured-output.md
+- breakfun: simulate code execution of a Trojan Schema. 89% over 13 models. Precondition: none, single turn. Best on: open-weight models. techniques/breakfun.md
 
 ## Tier C - historical or heuristic
 
-- many-shot: 61% Claude 2.0, cut to 2% by input classification. techniques/many-shot.md
-- puzzled: word-puzzle encoding. 88.8% avg (96.5% GPT-4.1), heuristic class. techniques/puzzled.md
-- puzzler: implicit-clue guessing game. 96.6% author-reported. techniques/puzzler.md
-- skeleton-key: augment guidelines with warnings. 7/7 models in 2024, since patched. techniques/skeleton-key.md
-- dan-persona: persona override. Discarded as a technique; useful only as a guardrail regression test. techniques/dan-persona.md
+- many-shot: 61% Claude 2.0, cut to 2% by input classification. Best on: Claude 2.0. techniques/many-shot.md
+- puzzled: word-puzzle encoding. 88.8% avg (96.5% GPT-4.1), heuristic class. Best on: GPT-4.1, Claude 3.7 Sonnet. techniques/puzzled.md
+- puzzler: implicit-clue guessing game. 96.6% author-reported. Best on: closed-source LLMs. techniques/puzzler.md
+- skeleton-key: augment guidelines with warnings. 7/7 models in 2024, since patched. Best on: GPT-4o, Claude 3 Opus +5. techniques/skeleton-key.md
+- dan-persona: persona override. Discarded as a technique; useful only as a guardrail regression test. Best on: GPT-3.5 / GPT-4 (2023). techniques/dan-persona.md
 
 ## Tier D - discarded, with evidence
 
-- low-resource-language: 96.0% keyword ASR collapses to 2.7% under substance scoring. Largest recorded evaluator artifact. techniques/low-resource-language.md
-- encoding-cipher: models decode and then refuse. Negative control. techniques/encoding-cipher.md
-- gcg-suffix: poor and inconsistent transfer across 13 open models; perplexity-detectable. techniques/gcg-suffix.md
+- low-resource-language: 96.0% keyword ASR collapses to 2.7% under substance scoring. Largest recorded evaluator artifact. Best on: GPT-3.5 / GPT-4 (keyword-match only). techniques/low-resource-language.md
+- encoding-cipher: models decode and then refuse. Negative control. Best on: small/old models (occasional). techniques/encoding-cipher.md
+- gcg-suffix: poor and inconsistent transfer across 13 open models; perplexity-detectable. Best on: Llama-2 (white-box). techniques/gcg-suffix.md
 
 ## Defenses
 
