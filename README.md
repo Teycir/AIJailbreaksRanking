@@ -8,7 +8,7 @@
 
 A maintained, evidence-graded catalog of LLM jailbreak techniques — currently **17 entries** (3 reliable, 6 conditional, 5 historical, 3 discarded). Only techniques that hold up under substance-aware evaluation are marked reliable. Everything else is either marked conditional or explicitly discarded, with the reason on record.
 
-Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json) and flat tabular data in [`data/techniques-summary.csv`](data/techniques-summary.csv). You can also explore the catalog via the [interactive web viewer](docs/index.html).
+Built for humans and for agents: every technique is a stable slug with structured metadata in [`data/techniques.json`](data/techniques.json) and flat tabular data in [`data/techniques-summary.csv`](data/techniques-summary.csv). You can also explore the catalog via the [interactive web viewer](https://teycir.github.io/AIJailbreaksRanking/) (live) — source at [`docs/index.html`](docs/index.html).
 
 <!-- ===================  BADGES  =================== -->
 
@@ -312,7 +312,7 @@ techniques/<id>.md           one doc per technique, YAML frontmatter
 docs/defenses.md             what actually works, mapped per technique
 docs/candidates.md           watchlist of candidates under review for Tier A
 docs/announcement_v1.md      v1.0 announcement templates (X, LinkedIn, Reddit)
-docs/index.html              interactive standalone web viewer with instant search & filters
+docs/index.html              interactive web viewer (GitHub Pages) with instant search & filters
 docs/taxonomy.md             how techniques are classified
 docs/reliability.md          the evaluation standard and why it matters
 scripts/query.py             catalog query helper (stdlib only; supports --csv)
