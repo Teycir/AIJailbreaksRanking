@@ -117,20 +117,24 @@
       white-space: nowrap;
     }
     td {
-      padding: 1rem;
+      padding: 0.9rem 1rem;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
+      line-height: 1.5;
     }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
     .badge {
       display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: bold;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
+      white-space: nowrap;   /* keep "Tier A" on one line */
+      line-height: 1.1;
     }
     .badge-tier-A { background: rgba(16, 185, 129, 0.2); color: var(--tier-a); border: 1px solid var(--tier-a); }
     .badge-tier-B { background: rgba(59, 130, 246, 0.2); color: var(--tier-b); border: 1px solid var(--tier-b); }
