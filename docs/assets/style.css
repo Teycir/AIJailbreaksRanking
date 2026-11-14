@@ -168,6 +168,11 @@ article.prose { max-width: 860px; margin: 0 auto; background: var(--card-bg); bo
 .prose pre { background: #010409; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin-bottom: 1rem; }
 .prose pre code { background: none; border: 0; padding: 0; font-size: 0.85rem; line-height: 1.45; }
 .prose blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; color: var(--text-muted); margin-bottom: 1rem; }
-.prose table { display: block; overflow-x: auto; margin-bottom: 1rem; font-size: 0.9rem; }
+.table-scroll { overflow-x: auto; margin-bottom: 1rem; }
+.prose table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: 0.9rem; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 @media (max-width: 640px) { article.prose { padding: 1.25rem; } }
+.top-link { margin: 0 auto 1.5rem; text-align: center; }
+.top-link a { color: var(--accent-hover); text-decoration: none; font-size: 0.95rem; }
+.top-link a:hover { text-decoration: underline; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }

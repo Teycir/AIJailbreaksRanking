@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology &amp; reliability standard · AIJailbreaksRanking</title>
+  <meta name="description" content="How every technique is graded: evaluator types (keyword-match, llm-judge-binary, substance-scored), tier rules, and why keyword ASR inflates success rates.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="page-head">
+      <a class="back" href="index.html">← All techniques</a>
+      <a class="back" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/docs/reliability.md">Markdown source ↗</a>
+    </div>
+    <article class="prose">
+<h1 id="reliability-standard">Reliability standard</h1>
+<p>The whole point of this catalog is the filter. This page defines it, so entries can be argued with rather than believed.</p>
+<h2 id="1-metric-discipline">1. Metric discipline</h2>
+<p>Three families of metric appear in the jailbreak literature, and they are not interchangeable.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it measures</th>
+<th>Failure mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyword / refusal-string ASR</td>
+<td>Whether the reply avoids a refusal string</td>
+<td>Counts incoherent or vacuous compliance as success. Inflates by 30–90 points.</td>
+</tr>
+<tr>
+<td>LLM-judge binary ASR</td>
+<td>A judge decides "did it comply"</td>
+<td>Still counts partial, low-substance output. Sensitive to judge prompt.</td>
+</tr>
+<tr>
+<td>Substance / harm scoring (StrongREJECT, HarmBench)</td>
+<td>Separate scores for refusal, specificity, convincingness</td>
+<td>Slower and costlier; the only defensible default.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rule: a number is accepted as evidence only if the evaluator is named. Keyword-only numbers are recorded but marked, and are never the basis for Tier A or B.</p>
+<h3 id="evaluator-values">Evaluator values</h3>
+<p>Every <code>reported[]</code> row in the catalog names its evaluator with one of these six values:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><code>evaluator</code></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>substance-scored</code></td>
+<td>Separate refusal / specificity / convincingness scores — <a href="https://arxiv.org/abs/2402.10260">StrongREJECT</a>, <a href="https://arxiv.org/abs/2402.04249">HarmBench</a>.</td>
+</tr>
+<tr>
+<td><code>llm-judge-binary</code></td>
+<td>One judge call decides complied vs refused; no score for how much substance was delivered.</td>
+</tr>
+<tr>
+<td><code>keyword-match</code></td>
+<td>Refusal-string matching. Recorded, never a Tier A/B basis.</td>
+</tr>
+<tr>
+<td><code>human</code></td>
+<td>Human raters judged the responses.</td>
+</tr>
+<tr>
+<td><code>qualitative</code></td>
+<td>No rate reported; behaviour described.</td>
+</tr>
+<tr>
+<td><code>unspecified</code></td>
+<td>Source does not say how success was measured.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each row also carries <code>n</code> — the number of prompts, trials, or (for <code>model_coverage</code>) models the rate was computed over. Where a source states no sample size the field is absent rather than imputed, and <code>scripts/validate.py</code> lists those rows as warnings.</p>
+<h2 id="2-the-inflation-is-measured-not-hypothetical">2. The inflation is measured, not hypothetical</h2>
+<p>The clearest case in the literature:</p>
+<ul>
+<li>Low-resource-language attacks on Qwen3-30B: <strong>96.0% keyword ASR, 2.7% substance ASR</strong> on the same responses.</li>
+<li>One request sampled 100 times at temperature 0.8: <strong>100% keyword, 50% substance</strong>.</li>
+<li>Ranking between DeepInception and prompt-rewriting <strong>reverses</strong> depending on evaluator and attempt budget.</li>
+</ul>
+<p>So an evaluator change alone can move a technique between "state of the art" and "discarded". That is why <code>low-resource-language</code> is Tier D here despite its headline number.</p>
+<h2 id="3-repeatability">3. Repeatability</h2>
+<p>A jailbreak that works once is not a jailbreak; it is a coin flip that landed.</p>
+<p>Requirements for Tier A and Tier B:</p>
+<ul>
+<li>Report the <strong>attempt budget</strong> and the <strong>success definition</strong>.</li>
+<li>Report behaviour under <strong>repeated sampling</strong>, not a single generation.</li>
+<li>Report <strong>cumulative failure probability</strong>, not only the first-success rate.</li>
+</ul>
+<p>Example of the standard applied: Best-of-N is Tier A precisely because the power-law relationship between N and ASR is characterised, not because any single run scored high.</p>
+<h2 id="4-transfer">4. Transfer</h2>
+<p>An attack optimised against model X is evidence about model X only.</p>
+<ul>
+<li>GCG suffixes transfer poorly and inconsistently: a multi-model study found no reliable transfer across 13 open models.</li>
+<li>Techniques that work through natural language or conversation state transfer far better, because they exploit alignment that is shared across the training pipeline rather than weights of one checkpoint.</li>
+</ul>
+<p>Rule: no Tier A on single-model evidence.</p>
+<h2 id="5-prompt-diversity">5. Prompt diversity</h2>
+<p>Heuristic attacks with a fixed prompt set score high and generalise badly.</p>
+<ul>
+<li><code>puzzled</code>, <code>puzzler</code>: high isolated ASR, low diversity, defeated by a semantic intent classifier.</li>
+<li><code>crescendo</code>, <code>best-of-n</code>: high diversity by construction, no single pattern to block.</li>
+</ul>
+<p>Rule: high ASR with a small fixed prompt set caps at Tier C regardless of the number.</p>
+<h2 id="6-author-reporting">6. Author reporting</h2>
+<p>Author-reported numbers are accepted but labelled. They are not downgraded automatically; they are simply not sufficient alone for Tier A. Independent reproduction is the promotion path.</p>
+<h2 id="7-tier-assignment">7. Tier assignment</h2>
+<pre><code>keyword ASR only                    -&gt; D (or C if independently reproduced with a fixed prompt set)
+heuristic + fixed prompts           -&gt; C
+historically effective, now patched -&gt; C
+needs precondition (prefill etc.)   -&gt; B
+black-box + defense-robust + reproduced -&gt; A
+</code></pre>
+<p>Default when uncertain: <strong>C</strong>. The cost of inflating a technique is higher than the cost of omitting it.</p>
+<h2 id="8-known-limits-of-this-catalog">8. Known limits of this catalog</h2>
+<ul>
+<li>Effect sizes are dated. Guardrails change monthly; a Tier A today is a Tier C later unless re-tested.</li>
+<li>Models are named by family, not by snapshot, because snapshots are not always public.</li>
+<li>Abstract-level evidence only. No entry here has been independently re-run by this repository; the tier reflects the cited study's methodology, not a local benchmark.</li>
+</ul>
+    </article>
+    <footer>
+      <p>Part of <a href="index.html">AIJailbreaksRanking</a> — an evidence-graded catalog of LLM jailbreak techniques.</p>
+      <p>Source: <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/docs/reliability.md">docs/reliability.md</a></p>
+    </footer>
+  </div>
+</body>
+</html>

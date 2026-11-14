@@ -314,6 +314,7 @@ docs/defenses.md             what actually works, mapped per technique
 docs/candidates.md           watchlist of candidates under review for Tier A
 docs/announcement_v1.md      v1.0 announcement templates (X, LinkedIn, Reddit)
 docs/index.html              interactive web viewer (GitHub Pages) with instant search & filters
+docs/methodology.html        rendered reliability standard (evaluator values, tier rules)
 docs/techniques/<id>.html    rendered technique pages, same styling as the viewer
 docs/assets/style.css        shared stylesheet for the viewer and technique pages
 docs/taxonomy.md             how techniques are classified

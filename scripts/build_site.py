@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Render docs/techniques/<id>.html from techniques/<id>.md.
+"""Render the static site under docs/.
 
-Shared styling comes from docs/assets/style.css, so a technique page looks like
-the catalog viewer. Run after editing a technique doc, then commit docs/.
+Builds docs/techniques/<id>.html from techniques/<id>.md and
+docs/methodology.html from docs/reliability.md. Shared styling comes from
+docs/assets/style.css, so every page looks like the catalog viewer. Run after
+editing a technique doc or the reliability standard, then commit docs/.
 
     python3 scripts/build_site.py
 """
@@ -35,7 +37,10 @@ PAGE = """<!DOCTYPE html>
 <body>
   <div class="container">
     <div class="page-head">
-      <a class="back" href="../index.html">← All techniques</a>
+      <div class="nav-links">
+        <a class="back" href="../index.html">← All techniques</a>
+        <a class="back" href="../methodology.html">Methodology</a>
+      </div>
       <a class="back" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/techniques/{id}.md">Markdown source ↗</a>
     </div>
     <div class="meta-row">
@@ -67,9 +72,7 @@ def render(record):
     if not src.exists():
         sys.exit(f"missing source doc: {src}")
     body = FRONTMATTER.sub("", src.read_text(encoding="utf-8"), count=1)
-    body = markdown.markdown(
-        body, extensions=["fenced_code", "tables", "sane_lists"]
-    )
+    body = wrap_tables(markdown.markdown(body, extensions=PROSE_EXTENSIONS))
     # Pygments is not a dependency: keep code blocks plain but readable.
     page = PAGE.format(
         id=tid,
@@ -85,6 +88,55 @@ def render(record):
     return OUT / f"{tid}.html", page
 
 
+STANDARD_PAGE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology &amp; reliability standard · AIJailbreaksRanking</title>
+  <meta name="description" content="How every technique is graded: evaluator types (keyword-match, llm-judge-binary, substance-scored), tier rules, and why keyword ASR inflates success rates.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="page-head">
+      <a class="back" href="index.html">← All techniques</a>
+      <a class="back" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/docs/reliability.md">Markdown source ↗</a>
+    </div>
+    <article class="prose">
+{body}
+    </article>
+    <footer>
+      <p>Part of <a href="index.html">AIJailbreaksRanking</a> — an evidence-graded catalog of LLM jailbreak techniques.</p>
+      <p>Source: <a href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/docs/reliability.md">docs/reliability.md</a></p>
+    </footer>
+  </div>
+</body>
+</html>
+"""
+
+PROSE_EXTENSIONS = ["fenced_code", "tables", "sane_lists", "toc"]
+
+
+def wrap_tables(body):
+    """Wide tables scroll inside the card instead of widening the page."""
+    return body.replace("<table>", '<div class="table-scroll"><table>').replace(
+        "</table>", "</table></div>"
+    )
+
+
+def build_standard():
+    src = DOCS / "reliability.md"
+    if not src.exists():
+        sys.exit(f"missing source doc: {src}")
+    body = wrap_tables(
+        markdown.markdown(src.read_text(encoding="utf-8"), extensions=PROSE_EXTENSIONS)
+    )
+    path = DOCS / "methodology.html"
+    path.write_text(STANDARD_PAGE.format(body=body), encoding="utf-8")
+    return path
+
+
 def main():
     data = json.loads((ROOT / "data" / "techniques.json").read_text(encoding="utf-8"))
     OUT.mkdir(parents=True, exist_ok=True)
@@ -96,7 +148,9 @@ def main():
     stale = {p.name for p in OUT.glob("*.html")} - set(written)
     for name in sorted(stale):
         (OUT / name).unlink()
+    std = build_standard()
     print(f"built {len(written)} technique pages -> docs/techniques/")
+    print(f"built {std.relative_to(ROOT)}")
     if stale:
         print(f"removed stale: {', '.join(sorted(stale))}")
 
