@@ -20,7 +20,7 @@ Built for humans and for agents: every technique is a stable slug with structure
 <a href="https://github.com/Teycir/AIJailbreaksRanking/releases/latest" title="Latest release">
   <img src="https://img.shields.io/github/release/Teycir/AIJailbreaksRanking?label=release&color=8b5cf6&style=for-the-badge&logo=github" alt="Release" />
 </a>&nbsp;
-<a href="https://github.com/Teycir/AIJailbreaksRanking/blob/main/LICENSE" title="License">
+<a href="LICENSE" title="License">
   <img src="https://img.shields.io/github/license/Teycir/AIJailbreaksRanking?label=license&color=8b5cf6&style=for-the-badge&logo=github" alt="License" />
 </a>&nbsp;
 <a href="data/techniques-summary.csv" title="17 Techniques Graded">
