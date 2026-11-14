@@ -262,7 +262,7 @@
         tr.innerHTML = `
           <td><span class="badge badge-tier-${t.tier}">Tier ${t.tier}</span></td>
           <td>
-            <a class="tech-title" href="../techniques/${t.id}.md">${t.name}</a>
+            <a class="tech-title" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/techniques/${t.id}.md">${t.name}</a>
             <span class="tech-id">${t.id}</span>
             <div class="tech-mechanism">${t.mechanism}</div>
           </td>
@@ -272,7 +272,7 @@
             <small style="color:var(--text-muted)">${t.access}</small>
           </td>
           <td>${reportedStr}</td>
-          <td><span style="font-size:0.82rem; text-transform:capitalize; color: ${t.status === 'recommended' ? 'var(--tier-a)' : (t.status === 'conditional' ? 'var(--tier-c)' : 'var(--tier-d}')};">${t.status}</span></td>
+          <td><span style="font-size:0.82rem; text-transform:capitalize; color: ${t.status === 'recommended' ? 'var(--tier-a)' : (t.status === 'conditional' ? 'var(--tier-c)' : 'var(--tier-d)')};">${t.status}</span></td>
         `;
         tbody.appendChild(tr);
       });
