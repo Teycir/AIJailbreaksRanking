@@ -155,7 +155,7 @@
                     "qualitative",
                     "unspecified"
                   ],
-                  "description": "Who decided success. keyword-match and unspecified never support Tier A/B alone."
+                  "description": "Who decided success. keyword-match = refusal-string matching; llm-judge-binary = one judge call, complied vs refused, no substance score; substance-scored = rubric scores for refusal / specificity / convincingness (StrongREJECT, HarmBench); human = human raters; qualitative = behaviour described, no rate; unspecified = source does not say. keyword-match and unspecified never support Tier A/B alone."
                 },
                 "note": {
                   "type": "string"

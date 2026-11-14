@@ -296,7 +296,7 @@ python3 scripts/query.py --class multi-turn --md  # markdown rows
 
 - **Primary sources:** Ingest [`data/techniques.json`](data/techniques.json) (or [`data/techniques-summary.csv`](data/techniques-summary.csv) when flat text is needed).
 - **Stable identifiers:** Technique IDs (e.g., `crescendo`, `best-of-n`) are immutable slugs. Per-technique documentation lives at `techniques/<id>.md`.
-- **Substance-scoring rule:** Never report a technique as reliable based on `binary_ASR` alone. Only techniques supported by substance-aware evaluators (`substance_ASR`) qualify for Tier A/B.
+- **Substance-scoring rule:** Never report a technique as reliable based on `binary_ASR` alone. Only techniques supported by substance-aware evaluators (`substance_ASR`) qualify for Tier A/B. Evaluator values are defined in [Evaluator values](docs/reliability.md#evaluator-values): `keyword-match` (refusal-string match), `llm-judge-binary` (one judge call, complied vs refused), `substance-scored` (rubric scores for refusal / specificity / convincingness, per StrongREJECT and HarmBench).
 - Full agent operating rules are codified in [`AGENTS.md`](AGENTS.md).
 
 ### Stable identifiers

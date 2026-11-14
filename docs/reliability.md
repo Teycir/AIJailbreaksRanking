@@ -14,13 +14,16 @@ Three families of metric appear in the jailbreak literature, and they are not in
 
 Rule: a number is accepted as evidence only if the evaluator is named. Keyword-only numbers are recorded but marked, and are never the basis for Tier A or B.
 
-Every `reported[]` row in the catalog names its evaluator with one of these five values:
+### Evaluator values
+
+Every `reported[]` row in the catalog names its evaluator with one of these six values:
 
 | `evaluator` | Meaning |
 |---|---|
-| `substance-scored` | Separate refusal / specificity / convincingness scores (StrongREJECT, HarmBench). |
-| `llm-judge-binary` | One judge call decides complied vs refused. |
+| `substance-scored` | Separate refusal / specificity / convincingness scores — [StrongREJECT](https://arxiv.org/abs/2402.10260), [HarmBench](https://arxiv.org/abs/2402.04249). |
+| `llm-judge-binary` | One judge call decides complied vs refused; no score for how much substance was delivered. |
 | `keyword-match` | Refusal-string matching. Recorded, never a Tier A/B basis. |
+| `human` | Human raters judged the responses. |
 | `qualitative` | No rate reported; behaviour described. |
 | `unspecified` | Source does not say how success was measured. |
 
