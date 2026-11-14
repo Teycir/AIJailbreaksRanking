@@ -69,9 +69,10 @@ def export():
 
     if HTML_VIEWER.is_file():
         html = HTML_VIEWER.read_text(encoding="utf-8")
-        m = re.search(r"let techniquesData = .*?;", html)
+        # greedy to end of the data line: strings can contain ';' (e.g. "USENIX ;login:")
+        m = re.search(r"^[ \t]*let techniquesData = .*;[ \t]*$", html, re.M)
         if m:
-            new_data = "let techniquesData = " + json.dumps(techs, ensure_ascii=False) + ";"
+            new_data = "    let techniquesData = " + json.dumps(techs, ensure_ascii=False) + ";"
             HTML_VIEWER.write_text(html[:m.start()] + new_data + html[m.end():], encoding="utf-8")
             print(f"Updated offline data in {HTML_VIEWER.relative_to(ROOT)}")
 
