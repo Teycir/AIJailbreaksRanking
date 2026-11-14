@@ -32,15 +32,20 @@ PAGE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{name} — Tier {tier} · AIJailbreaksRanking</title>
   <meta name="description" content="{desc}">
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" href="../favicon.ico" sizes="48x48">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="stylesheet" href="../assets/style.css?v=3">
 </head>
 <body>
   <div class="container">
+    <nav class="topbar">
+      <a class="brand" href="../index.html">AIJailbreaksRanking</a>
+      <a class="top-link" href="../methodology.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Methodology</a>
+    </nav>
     <div class="page-head">
-      <div class="nav-links">
-        <a class="back" href="../index.html">← All techniques</a>
-        <a class="back" href="../methodology.html">Methodology</a>
-      </div>
+      <a class="back" href="../index.html">← All techniques</a>
       <a class="back" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/techniques/{id}.md">Markdown source ↗</a>
     </div>
     <div class="meta-row">
@@ -95,10 +100,18 @@ STANDARD_PAGE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Methodology &amp; reliability standard · AIJailbreaksRanking</title>
   <meta name="description" content="How every technique is graded: evaluator types (keyword-match, llm-judge-binary, substance-scored), tier rules, and why keyword ASR inflates success rates.">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body>
   <div class="container">
+    <nav class="topbar">
+      <a class="brand" href="index.html">AIJailbreaksRanking</a>
+      <span class="top-link active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Methodology</span>
+    </nav>
     <div class="page-head">
       <a class="back" href="index.html">← All techniques</a>
       <a class="back" href="https://github.com/Teycir/AIJailbreaksRanking/blob/master/docs/reliability.md">Markdown source ↗</a>

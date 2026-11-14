@@ -172,7 +172,11 @@ article.prose { max-width: 860px; margin: 0 auto; background: var(--card-bg); bo
 .prose table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: 0.9rem; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 @media (max-width: 640px) { article.prose { padding: 1.25rem; } }
-.top-link { margin: 0 auto 1.5rem; text-align: center; }
-.top-link a { color: var(--accent-hover); text-decoration: none; font-size: 0.95rem; }
-.top-link a:hover { text-decoration: underline; }
-.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--border); }
+.brand { color: var(--text-muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; text-decoration: none; }
+.brand:hover { color: var(--text); }
+.top-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.38rem 0.85rem 0.38rem 0.75rem; border: 1px solid rgba(139, 92, 246, 0.38); border-radius: 999px; background: rgba(139, 92, 246, 0.1); color: var(--accent-hover); font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background 0.15s ease, border-color 0.15s ease; }
+.top-link svg { width: 14px; height: 14px; opacity: 0.9; }
+.top-link:hover { background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.65); }
+.top-link.active { background: rgba(139, 92, 246, 0.22); border-color: rgba(139, 92, 246, 0.65); color: #fff; }
+@media (max-width: 480px) { .brand { font-size: 0.72rem; } .top-link { font-size: 0.78rem; } }
